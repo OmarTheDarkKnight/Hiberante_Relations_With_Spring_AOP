@@ -1,0 +1,9 @@
+jdbc.driverClassName=
+jdbc.dialect=
+jdbc.databaseurl=
+jdbc.username=
+jdbc.password=
+minPoolSize=
+maxPoolSize=
+maxIdleTime=
+
