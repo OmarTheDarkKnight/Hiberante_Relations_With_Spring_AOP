@@ -3,12 +3,14 @@ package com.bat.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bat.alfred.Helper;
 import com.bat.dao.InstructorDao;
 import com.bat.model.Instructor;
 import com.bat.service.InstructorService;
 
+@Service
 public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private InstructorDao instructorDao;
