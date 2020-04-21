@@ -43,4 +43,4 @@ $RECYCLE.BIN/
 
 *.stackdump
 
-*/jdbc.properties
+src/main/webapp/WEB-INF/jdbc.properties
