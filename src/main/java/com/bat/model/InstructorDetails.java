@@ -29,7 +29,6 @@ public class InstructorDetails {
 	public InstructorDetails() {}
 
 	public InstructorDetails(String youTubeChannel, String hobby) {
-		super();
 		this.youTubeChannel = youTubeChannel;
 		this.hobby = hobby;
 	}
