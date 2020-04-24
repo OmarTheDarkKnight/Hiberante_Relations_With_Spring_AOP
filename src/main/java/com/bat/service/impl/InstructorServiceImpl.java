@@ -9,6 +9,7 @@ import com.bat.alfred.Helper;
 import com.bat.dao.InstructorDao;
 import com.bat.model.Instructor;
 import com.bat.service.InstructorService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class InstructorServiceImpl implements InstructorService {
@@ -18,27 +19,32 @@ public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private Helper helper;
 
+	@Transactional
 	@Override
 	public void save(Instructor newInstructor) {
 		instructorDao.save(newInstructor);
 	}
-	
+
+	@Transactional
 	@Override
 	public List getAll() {
-		return instructorDao.get();
+		return instructorDao.get("");
 	}
 
+	@Transactional
 	@Override
 	public Instructor getById(int instructorId) {
 		List instructor = instructorDao.get("id = " + instructorId);
 		return instructor.isEmpty() ? null : (Instructor)instructor.get(0);
 	}
 
+	@Transactional
 	@Override
 	public List getByName(String name) {
 		return instructorDao.get(helper.whereLike(new String[]{"firstName", "lastName"},  "%" + name + "%"));
 	}
 
+	@Transactional
 	@Override
 	public List getByEmail(String email) {
 		return instructorDao.get(helper.whereLike(new String[]{"email"},  "%" + email + "%"));
@@ -49,6 +55,7 @@ public class InstructorServiceImpl implements InstructorService {
 		return instructorDao.get(helper.whereLike(new String[]{"firstName", "lastName", "email"},  "%" + searchString + "%"));
 	}
 
+	@Transactional
 	@Override
 	public void delete(int instructorId) {
 		instructorDao.delete(instructorId);

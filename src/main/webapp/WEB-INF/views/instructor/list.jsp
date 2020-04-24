@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h2>kjsrghrlejfio</h2>
 	<table>
 		<tr>
 			<th>First name</th>
@@ -16,9 +17,9 @@
 		</tr>
 		<c:forEach var="instructor" items="${instructors}">
 			<tr>
-				<td>${instrunctor.firstName}</td>
-				<td>${instrunctor.lastName}</td>
-				<td>${instrunctor.email}</td>
+				<td>${instructor.firstName}</td>
+				<td>${instructor.lastName}</td>
+				<td>${instructor.email}</td>
 			</tr>
 		</c:forEach>
 	</table>

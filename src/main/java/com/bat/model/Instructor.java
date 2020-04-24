@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ public class Instructor {
 	private int id;
 	
 	@Column(name="first_name")
-	private String fristName;
+	private String firstName;
 	
 	@Column(name="last_name")
 	private String lastName;
@@ -45,7 +44,7 @@ public class Instructor {
 
 	public Instructor(String fristName, String lastName, String email) {
 		super();
-		this.fristName = fristName;
+		this.firstName = fristName;
 		this.lastName = lastName;
 		this.email = email;
 	}
@@ -58,12 +57,12 @@ public class Instructor {
 		this.id = id;
 	}
 
-	public String getFristName() {
-		return fristName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFristName(String fristName) {
-		this.fristName = fristName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -97,16 +96,15 @@ public class Instructor {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-	
+
 	public void addCourse(Course theCourse) {
 		if(courses == null) {
 			courses = new ArrayList<>();
 		}
-		
 		courses.add(theCourse);
 		theCourse.setInstructor(this);
 	}
-	
+
 	public void addCourse(Course[] theCourses) {
 		if(courses == null) {
 			courses = new ArrayList<>();
@@ -119,7 +117,7 @@ public class Instructor {
 
 	@Override
 	public String toString() {
-		return "Instructor [id=" + id + ", fristName=" + fristName + ", lastName=" + lastName
+		return "Instructor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + ", instructorDetails=" + instructorDetails + ", courses=" + courses + "]";
 	}
 }
