@@ -30,50 +30,33 @@
 	
 	<!-- Load database properties from jdbc.properties file -->
 	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
 		p:location="/WEB-INF/jdbc.properties" />
 		
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
-		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
-		
 	<!-- Define Database DataSource / connection pool -->
-	<!-- <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <property name="driverClass" value="${jdbc.driverClassName}" />
         <property name="jdbcUrl" value="${jdbc.databaseurl}" />
         <property name="user" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" /> 
+        <property name="password" value="${jdbc.password}" />
 
-        these are connection pool properties for C3P0
+		<!-- these are connection pool properties for C3P0 -->
         <property name="minPoolSize" value="${minPoolSize}" />
         <property name="maxPoolSize" value="${maxPoolSize}" />
         <property name="maxIdleTime" value="${maxIdleTime}" />
-	</bean> -->
-	
-	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-          destroy-method="close">
-        <property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hibernatedemo?useSSL=false&amp;serverTimezone=UTC" />
-        <property name="user" value="root" />
-        <property name="password" value="" /> 
-
-        <!-- these are connection pool properties for C3P0 -->
-        <property name="minPoolSize" value="5" />
-        <property name="maxPoolSize" value="20" />
-        <property name="maxIdleTime" value="30000" />
-	</bean> 
+	</bean>
 	
 	<!-- Setup Hibernate session factory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="myDataSource" />
 		<property name="packagesToScan" value="com.bat.model" />
 
 		<property name="hibernateProperties">
 		   <props>
 		      <!-- <prop key="hibernate.dialect">"${jdbc.dialect}"</prop> -->
-		      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+		      <prop key="hibernate.dialect">${jdbc.dialect}</prop>
 		      <prop key="hibernate.show_sql">true</prop>
 		   </props>
 		</property>
@@ -87,12 +70,13 @@
     
     <!-- Enable configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
-	
-	<bean id="messageSource"
+
+	<!-- Resource for custom messages -->
+	<!-- <bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
-		
+
 		<property name="basenames" value="resources/messages"></property>
-	</bean>
+	</bean> -->
 
 </beans>
 
