@@ -25,23 +25,20 @@ public class InstructorDaoImpl implements InstructorDao {
 	@Override
 	public List get(String whereClause) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		// build query with the pre-built @whereClause string
-		Query<Instructor> query = session.createQuery("from Instructor where " + whereClause, Instructor.class);
-		List<Instructor> instructors = query.getResultList();
-		
-		return instructors;
-	}
-	
-	@Override
-	public List get() {
-		return this.get("1");
+		String builtQuery = "from Instructor";
+
+		// if @whereClause is "" then add it with @builtQuery else add " where " first, then @whereClause
+		// @whereClause "" empty means fetch all records
+		builtQuery += whereClause.isEmpty() ? whereClause : " where " + whereClause;
+		Query<Instructor> query = session.createQuery(builtQuery, Instructor.class);
+
+		return query.getResultList();
 	}
 
 	@Override
 	public void delete(int instructorId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("delete from Customer where id=:instructorId");
+		Query query = session.createQuery("delete from Instructor where id=:instructorId");
 		query.setParameter("instructorId", instructorId);
 		query.executeUpdate();
 	}
