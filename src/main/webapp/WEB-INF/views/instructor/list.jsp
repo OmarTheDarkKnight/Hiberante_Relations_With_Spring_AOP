@@ -5,12 +5,12 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Insert title here</title>
+    <title>Instructors</title>
 </head>
 <body>
 	<h2>Instructors</h2>
 	<!-- Create url for showing instructor form -->
-	<c:url var="updateLink" value="/instructor/instructor-form"></c:url>
+	<c:url var="updateLink" value="/instructor/instructor-form?target=" />
 
 	<div class="button">
 		<a href="${updateLink}">
@@ -41,7 +41,7 @@
 					<td>${instructor.instructorDetails.hobby}</td>
 					<td>${instructor.instructorDetails.youTubeChannel}</td>
 					<td>
-						<a href="${updateLink}/${instructor.id}">Update</a>
+						<a href="${updateLink}${instructor.id}">Update</a>
 						|
 						<a onclick="if(!confirm('Are you sure you want to delete this value?')) return false"
 								href="${deleteLink}">Delete</a>
