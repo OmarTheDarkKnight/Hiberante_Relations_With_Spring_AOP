@@ -1,16 +1,13 @@
 package com.bat.controller;
 
 import com.bat.model.Instructor;
-import com.bat.model.InstructorDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.bat.alfred.Helper;
 import com.bat.service.InstructorService;
@@ -27,6 +24,8 @@ public class InstructorController {
 	@Autowired
 	private Helper helper;
 
+	private String folderName = "instructor";
+
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		// Spring class for string trim
@@ -42,6 +41,22 @@ public class InstructorController {
 	public String getInstructorList(Model model) {
 		List<Instructor> instructors = instructorService.getAll();
 		model.addAttribute("instructors", instructors);
-		return helper.buildViewName("instructor", "list");
+		return helper.buildViewName(folderName, "list");
+	}
+
+	@GetMapping("/instructor-form")
+	public String showInstructorForm(@RequestParam("target") String instructorId, Model model) {
+		if(!StringUtils.isEmpty(instructorId)) {
+			try{
+				int theId = Integer.parseInt(instructorId);
+				Instructor instructor = instructorService.getById(theId);
+				model.addAttribute("instructor", instructor);
+			} catch (Exception exception) {
+				return "redirect:/instructor/all";
+			}
+		} else {
+			model.addAttribute("instructor", new Instructor());
+		}
+		return helper.buildViewName(folderName, "instructorForm");
 	}
 }
