@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,7 +41,8 @@ public class Instructor {
 	@CustomEmail
 	@Column(name="email")
 	private String email;
-	
+
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="instructor_detail_id")
 	private InstructorDetails instructorDetails;
