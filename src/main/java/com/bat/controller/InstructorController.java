@@ -64,4 +64,16 @@ public class InstructorController {
 		}
 		return helper.buildViewName(folderName, "instructorForm");
 	}
+
+	@PostMapping("/saveInstructor")
+	public String saveInstructor(
+			@Valid @ModelAttribute("instructor") Instructor theInstructor,
+			BindingResult bindingResult) {
+
+		if(bindingResult.hasErrors()) {
+			return helper.buildViewName(folderName, "instructorForm");
+		}
+		instructorService.save(theInstructor);
+		return "redirect:/instructor/all";
+	}
 }
