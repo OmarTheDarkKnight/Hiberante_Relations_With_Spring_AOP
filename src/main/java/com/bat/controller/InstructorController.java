@@ -1,17 +1,20 @@
 package com.bat.controller;
 
 import com.bat.model.Instructor;
+import com.bat.model.InstructorDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.bat.alfred.Helper;
 import com.bat.service.InstructorService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -55,7 +58,9 @@ public class InstructorController {
 				return "redirect:/instructor/all";
 			}
 		} else {
-			model.addAttribute("instructor", new Instructor());
+			Instructor instructor = new Instructor();
+			instructor.setInstructorDetails(new InstructorDetails());
+			model.addAttribute("instructor", instructor);
 		}
 		return helper.buildViewName(folderName, "instructorForm");
 	}
