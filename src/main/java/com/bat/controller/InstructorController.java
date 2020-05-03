@@ -51,13 +51,15 @@ public class InstructorController {
 	}
 
 	@GetMapping("/instructor-form")
-	public String showInstructorForm(@RequestParam("target") String theId, Model model) {
+	public String showInstructorForm(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
 		if(!StringUtils.isEmpty(theId)) {
+			Map<String, String> messages = new HashMap<>();
 			try{
-				int instructorId = Integer.parseInt(theId);
-				Instructor instructor = instructorService.getById(instructorId);
+				Instructor instructor = instructorService.getById(theId);
 				model.addAttribute("instructor", instructor);
 			} catch (Exception exception) {
+				messages.put("error", "Could not delete resource");
+				redirectAttr.addFlashAttribute("messages", messages);
 				return "redirect:/instructor/all";
 			}
 		} else {
