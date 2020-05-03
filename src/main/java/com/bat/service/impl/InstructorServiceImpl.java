@@ -33,7 +33,8 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Transactional
 	@Override
-	public Instructor getById(int instructorId) {
+	public Instructor getById(String theId) {
+		int instructorId = Integer.parseInt(theId);
 		List instructor = instructorDao.get("id = " + instructorId);
 		return instructor.isEmpty() ? null : (Instructor)instructor.get(0);
 	}
