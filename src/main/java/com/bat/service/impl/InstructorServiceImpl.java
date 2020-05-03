@@ -57,7 +57,8 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Transactional
 	@Override
-	public void delete(int instructorId) {
+	public void delete(String theID) {
+		int instructorId = Integer.parseInt(theID);
 		instructorDao.delete(instructorId);
 	}
 }

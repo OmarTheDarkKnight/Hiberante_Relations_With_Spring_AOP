@@ -11,5 +11,5 @@ public interface InstructorService {
 	public List getByName(String name);
 	public List getByEmail(String email);
 	public List getByAnyField(String searchString);
-	public void delete(int instructorId);
+	public void delete(String theID);
 }
