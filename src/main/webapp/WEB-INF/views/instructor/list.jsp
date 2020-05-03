@@ -8,7 +8,23 @@
     <title>Instructors</title>
 </head>
 <body>
+<style>
+	.error {
+		color: red;
+	}
+	.success {
+		color: green;
+	}
+</style>
+
 	<h2>Instructors</h2>
+
+    <p>
+        <c:forEach var="message" items="${messages}">
+            <span class="${message.key}">${message.value}</span><br/>
+        </c:forEach>
+    </p>
+
 	<!-- Create url for showing instructor form -->
 	<c:url var="updateLink" value="/instructor/instructor-form?target=" />
 
@@ -29,11 +45,6 @@
 				<th>Action</th>
 			</tr>
 			<c:forEach var="instructor" items="${instructors}">
-				<!-- Create url for delete -->
-				<c:url var="deleteLink" value="/instructor/delete">
-					<c:param name="target" value="${instructor.id}" />
-				</c:url>
-
 				<tr>
 					<td>${instructor.firstName}</td>
 					<td>${instructor.lastName}</td>
@@ -43,12 +54,26 @@
 					<td>
 						<a href="${updateLink}${instructor.id}">Update</a>
 						|
-						<a onclick="if(!confirm('Are you sure you want to delete this value?')) return false"
-								href="${deleteLink}">Delete</a>
+						<a onclick="deleteSubmit(${instructor.id})"
+								href="javascript:void(0)">Delete</a>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
+
+	<form:form action="delete" method="post" id="instructorDeleteForm">
+		<input type="hidden" name="theId" value="x" />
+	</form:form>
 </body>
+<script>
+	function deleteSubmit(theID) {
+		let confirmation = confirm('Are you sure you want to delete this value?');
+		if(confirmation) {
+			let form = document.getElementById("instructorDeleteForm");
+			form.elements["theId"].value = theID;
+			form.submit();
+		}
+	}
+</script>
 </html>
