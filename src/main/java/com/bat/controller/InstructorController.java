@@ -96,4 +96,24 @@ public class InstructorController {
         redirectAttr.addFlashAttribute("messages", messages);
 	    return "redirect:/instructor/all";
     }
+
+    @GetMapping("/courses")
+    public String showInstructorCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
+        Map<String, String> messages = new HashMap<>();
+        if(!StringUtils.isEmpty(theId)) {
+            try{
+                Instructor instructor = instructorService.getById(theId);
+                model.addAttribute("instructor", instructor);
+            } catch (Exception exception) {
+                messages.put("error", "Could not delete resource");
+                redirectAttr.addFlashAttribute("messages", messages);
+                return "redirect:/instructor/all";
+            }
+        } else {
+            messages.put("error", "Invalid request");
+            redirectAttr.addFlashAttribute("messages", messages);
+            return "redirect:/instructor/all";
+        }
+        return helper.buildViewName(folderName, "courses");
+    }
 }
