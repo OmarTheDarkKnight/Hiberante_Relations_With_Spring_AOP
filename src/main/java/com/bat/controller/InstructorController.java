@@ -1,7 +1,10 @@
 package com.bat.controller;
 
+import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.model.InstructorDetails;
+import com.bat.service.CourseService;
+import com.bat.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,12 @@ public class InstructorController {
 
 	@Autowired
 	private InstructorService instructorService;
+
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
+    private ReviewService reviewService;
 	
 	@Autowired
 	private Helper helper;
@@ -103,9 +112,11 @@ public class InstructorController {
         if(!StringUtils.isEmpty(theId)) {
             try{
                 Instructor instructor = instructorService.getById(theId);
+                List<Course> coursesOfTheInstructor = courseService.getByInstructor(instructor.getId());
+                instructor.setCourses(coursesOfTheInstructor);
                 model.addAttribute("instructor", instructor);
             } catch (Exception exception) {
-                messages.put("error", "Could not delete resource");
+                messages.put("error", exception.getMessage());
                 redirectAttr.addFlashAttribute("messages", messages);
                 return "redirect:/instructor/all";
             }
