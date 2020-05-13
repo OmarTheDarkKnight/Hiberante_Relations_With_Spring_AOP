@@ -38,7 +38,8 @@ public class ReviewDaoImpl implements ReviewDao {
     public float getAvg(int courseId) {
         Session session = sessionFactory.getCurrentSession();
         String builtQuery = new StringBuilder().append("SELECT avg(rating) FROM Review WHERE course_id=").append(courseId).toString();
-        return (Float) session.createQuery(builtQuery).getSingleResult();
+        Double avg = (Double) session.createQuery(builtQuery).getSingleResult();
+        return avg.floatValue();
     }
 
     @Override
