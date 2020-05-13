@@ -18,16 +18,12 @@
             Courses taken by ${instructor.firstName} ${instructor.lastName}
             <tr>
                 <th>Title</th>
-                <th>Review</th>
+                <th>Rating</th>
             </tr>
             <c:forEach var="course" items="${instructor.courses}">
                 <tr>
                     <td>${course.title}</td>
-                    <c:set var="sum" value="${0}"/>
-                    <c:forEach var="review" items="${course.reviews}">
-                        <c:set var="sum" value="${sum + review.rating}" />
-                    </c:forEach>
-                    <td>${sum / fn:length(course.reviews)}</td>
+                    <td>${course.rating}</td>
                 </tr>
             </c:forEach>
         </table>
