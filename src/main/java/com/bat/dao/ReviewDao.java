@@ -7,5 +7,6 @@ import java.util.List;
 public interface ReviewDao {
     public void save(Review review);
     public List get(String whereClause);
+    public float getAvg(int courseId);
     public void delete(int reviewId);
 }

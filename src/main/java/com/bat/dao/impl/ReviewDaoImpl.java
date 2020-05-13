@@ -35,6 +35,13 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
+    public float getAvg(int courseId) {
+        Session session = sessionFactory.getCurrentSession();
+        String builtQuery = new StringBuilder().append("SELECT avg(rating) FROM Review WHERE course_id=").append(courseId).toString();
+        return (Float) session.createQuery(builtQuery).getSingleResult();
+    }
+
+    @Override
     public void delete(int reviewId) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete from Review where id=:theReviewId");
