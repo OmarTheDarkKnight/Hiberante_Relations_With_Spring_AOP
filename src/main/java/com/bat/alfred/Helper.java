@@ -2,6 +2,9 @@ package com.bat.alfred;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
+import java.util.List;
+
 @Component
 public class Helper {
 	/*
@@ -75,5 +78,23 @@ public class Helper {
 	 * */ 
 	public String whereLike(String[] fields, String regex) {
 		return "(" + this.buildWhereQueryWithOperator(fields, "LIKE", regex) + ")";
+	}
+
+	/*
+	 * @param String fields
+	 * @param Stirng regex
+	 * @return String
+	 * Builds query using fields name and value
+	 * by calling the buildWhereQueryWithOperator method
+	 * Used to create query with multiple "AND" operator
+	 * example : (field1 = regex1 AND field2 = regex2)
+	 * */
+	public String whereAnd(List<String[][]> whereList) {
+		String query = "(";
+		for(String[][] s: whereList) {
+			query += this.where(s[0], s[1][0], s[2][0]) + " AND ";
+		}
+		query += ")";
+		return query;
 	}
 }
