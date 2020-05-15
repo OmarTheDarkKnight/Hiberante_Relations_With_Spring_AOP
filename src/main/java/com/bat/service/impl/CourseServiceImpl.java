@@ -3,7 +3,9 @@ package com.bat.service.impl;
 import com.bat.alfred.Helper;
 import com.bat.dao.CourseDao;
 import com.bat.model.Course;
+import com.bat.model.Instructor;
 import com.bat.service.CourseService;
+import com.bat.service.InstructorService;
 import com.bat.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,15 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+    private InstructorService instructorService;
+
     @Override
     public void save(Course newCourse) {
+        if(newCourse.getInstructor().getEmail() != null) {
+            Instructor instructor = (Instructor) instructorService.getByEmail(newCourse.getInstructor().getEmail()).get(0);
+            newCourse.setInstructor(instructor);
+        }
         courseDao.save(newCourse);
     }
 
