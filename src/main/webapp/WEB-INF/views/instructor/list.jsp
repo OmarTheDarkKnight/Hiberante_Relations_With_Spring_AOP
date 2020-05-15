@@ -67,7 +67,7 @@
 	</div>
 
 	<form:form action="delete" method="post" id="instructorDeleteForm">
-		<input type="hidden" name="theId" value="x" />
+		<input type="hidden" name="theId" value="" />
 	</form:form>
 </body>
 <script>
