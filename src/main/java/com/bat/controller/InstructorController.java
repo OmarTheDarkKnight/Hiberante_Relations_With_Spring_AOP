@@ -4,7 +4,6 @@ import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.model.InstructorDetails;
 import com.bat.service.CourseService;
-import com.bat.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -57,7 +56,8 @@ public class InstructorController {
 	}
 
 	@GetMapping("/instructor-form")
-	public String showInstructorForm(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
+	public String showInstructorForm(@RequestParam(value = "target", required = false) String theId,
+									 Model model, RedirectAttributes redirectAttr) {
 		if(!StringUtils.isEmpty(theId)) {
 			Map<String, String> messages = new HashMap<>();
 			try{

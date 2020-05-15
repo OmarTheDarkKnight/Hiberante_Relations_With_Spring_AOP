@@ -26,7 +26,7 @@
     </p>
 
 	<!-- Create url for showing instructor form -->
-	<c:url var="updateLink" value="/instructor/instructor-form?target=" />
+	<c:url var="updateLink" value="/instructor/instructor-form" />
 
 	<div class="button">
 		<a href="${updateLink}">
@@ -56,7 +56,7 @@
 					<td>
 						<a href="${courseLink}">See courses</a>
 						|
-						<a href="${updateLink}${instructor.id}">Update</a>
+						<a href="${updateLink}?target=${instructor.id}">Update</a>
 						|
 						<a onclick="deleteSubmit(${instructor.id})"
 								href="javascript:void(0)">Delete</a>
