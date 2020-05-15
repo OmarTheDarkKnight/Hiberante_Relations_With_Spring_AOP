@@ -24,9 +24,16 @@
         </div>
 
         <div>
-            <form:label path="instructor.email" cssErrorClass="error">Instructor's Email : </form:label>
-            <form:input path="instructor.email" />
-            <form:errors path="instructor.email" cssClass="error"/>
+            <c:choose>
+                <c:when test="${empty course.instructor.email}">
+                    <form:label path="instructor.email" cssErrorClass="error">Instructor's Email : </form:label>
+                    <form:input path="instructor.email" />
+                    <form:errors path="instructor.email" cssClass="error"/>
+                </c:when>
+                <c:otherwise>
+                    Instructor's Email : ${course.instructor.email}
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <div>
