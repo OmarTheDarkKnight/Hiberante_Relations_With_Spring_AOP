@@ -28,6 +28,10 @@
             </c:forEach>
         </table>
     </div>
+
+    <div>
+        <a href="${pageContext.request.contextPath}/course/course-form?parent=${instructor.id}">Add a new course</a>
+    </div>
 </div>
 
 <p>
