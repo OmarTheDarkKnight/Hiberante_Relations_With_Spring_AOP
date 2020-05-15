@@ -69,6 +69,10 @@
 	<form:form action="delete" method="post" id="instructorDeleteForm">
 		<input type="hidden" name="theId" value="" />
 	</form:form>
+
+	<p>
+		<a href="${pageContext.request.contextPath}/">Back to main menu</a>
+	</p>
 </body>
 <script>
 	function deleteSubmit(theID) {
