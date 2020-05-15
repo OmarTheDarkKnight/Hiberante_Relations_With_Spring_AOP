@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List getAll() {
-        return courseDao.get("");
+        return this.setCourseRating(courseDao.get(""));
     }
 
     @Override
