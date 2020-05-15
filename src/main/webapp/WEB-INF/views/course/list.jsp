@@ -27,7 +27,7 @@
     <c:url var="updateLink" value="/course/course-form" />
 
     <div class="button">
-        <a href="${updateLink}?target=&parent=">
+        <a href="${updateLink}">
             <button>Add Course</button>
         </a>
     </div>
