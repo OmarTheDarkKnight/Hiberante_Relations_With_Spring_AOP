@@ -32,9 +32,6 @@ public class InstructorController {
 
 	@Autowired
 	private CourseService courseService;
-
-	@Autowired
-    private ReviewService reviewService;
 	
 	@Autowired
 	private Helper helper;
