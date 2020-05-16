@@ -36,6 +36,17 @@ public class InstructorDaoImpl implements InstructorDao {
 	}
 
 	@Override
+	public List getByEmail(String email){
+		Session session = sessionFactory.getCurrentSession();
+		String builtQuery = "from Instructor";
+		builtQuery +=  " where email LIKE :instructorEmail";
+		Query<Instructor> query = session.createQuery(builtQuery, Instructor.class);
+		query.setParameter("instructorEmail", email);
+
+		return query.getResultList();
+	}
+
+	@Override
 	public void delete(int instructorId) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("delete from Instructor where id=:instructorId");
