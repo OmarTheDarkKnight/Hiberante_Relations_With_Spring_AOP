@@ -44,7 +44,7 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public List getByEmail(String email) {
-		return instructorDao.get(helper.whereLike(new String[]{"email"},  "%" + email + "%"));
+		return instructorDao.getByEmail(email);
 	}
 	
 	@Override
