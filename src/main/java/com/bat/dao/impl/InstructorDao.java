@@ -13,9 +13,20 @@ import com.bat.model.Instructor;
 
 @Repository
 public class InstructorDao extends HelperDao {
+	public void insert(Instructor instructor) {
+		em.persist(instructor);
+	}
+
+	public void update(Instructor instructor) {
+		em.merge(instructor);
+	}
+
+	public Instructor getById(Integer mapID) {
+		return em.find(Instructor.class, mapID);
+	}
 
 	public List<Instructor> getAll() {
-		return hibernateQuery("SELECT * FROM instructor WHERE 1", Instructor.class)
+		return hibernateQuery("SELECT * FROM instructor", Instructor.class)
 				.list();
 	}
 
@@ -38,20 +49,8 @@ public class InstructorDao extends HelperDao {
 				.list();
 	}
 
-	public Instructor getById(Integer mapID) {
-		return em.find(Instructor.class, mapID);
-	}
-
-	public void insert(Instructor testEntity) {
-		em.persist(testEntity);
-	}
-
-	public void update(Instructor testEntity) {
-		em.merge(testEntity);
-	}
-
-	public void delete(Instructor testEntity) {
-		em.remove(testEntity);
+	public void delete(Instructor instructor) {
+		em.remove(instructor);
 	}
 
 }
