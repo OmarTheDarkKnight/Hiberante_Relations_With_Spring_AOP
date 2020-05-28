@@ -1,4 +1,4 @@
-package com.bat.dao.impl;
+package com.bat.dao;
 
 import com.bat.dao.HelperDao;
 import com.bat.model.Review;
