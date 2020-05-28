@@ -36,15 +36,14 @@ public class InstructorDao extends HelperDao {
 				.uniqueResult();
 	}
 
-	public List<Instructor> getByName(String firstName, String lastName) {
-		return hibernateQuery("SELECT * FROM instructor WHERE firstName LIKE %:firstName% OR lastName LKE %:lastName%", Instructor.class)
-				.setParameter("firstName", firstName)
-				.setParameter("lastName", lastName)
+	public List<Instructor> getByName(String name) {
+		return hibernateQuery("SELECT * FROM instructor WHERE firstName LIKE %:name% OR lastName LKE %:name%", Instructor.class)
+				.setParameter("name", name)
 				.list();
 	}
 
-	public void delete(Instructor instructor) {
-		em.remove(instructor);
+	public void delete(int instructorId) {
+		em.remove(this.getById(instructorId));
 	}
 
 }

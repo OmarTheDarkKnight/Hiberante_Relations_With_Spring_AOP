@@ -22,34 +22,23 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public void save(Instructor newInstructor) {
-		instructorDao.save(newInstructor);
+//		if(newInstructor.getId() == 0) {
+//
+//		} else {
+//
+//		}
+//		instructorDao.insert(newInstructor);
 	}
 
 	@Override
-	public List getAll() {
-		return instructorDao.get("");
+	public List<Instructor> getAllInstructors() {
+		return instructorDao.getAll();
 	}
 
 	@Override
-	public Instructor getById(String theId) {
+	public Instructor getByIdForInstructorForm(String theId) {
 		int instructorId = Integer.parseInt(theId);
-		List instructor = instructorDao.get("id = " + instructorId);
-		return instructor.isEmpty() ? null : (Instructor)instructor.get(0);
-	}
-
-	@Override
-	public List getByName(String name) {
-		return instructorDao.get(helper.whereLike(new String[]{"firstName", "lastName"},  "%" + name + "%"));
-	}
-
-	@Override
-	public List getByEmail(String email) {
-		return instructorDao.getByEmail(email);
-	}
-	
-	@Override
-	public List getByAnyField(String searchString) {
-		return instructorDao.get(helper.whereLike(new String[]{"firstName", "lastName", "email"},  "%" + searchString + "%"));
+		return instructorDao.getById(instructorId);
 	}
 
 	@Override
