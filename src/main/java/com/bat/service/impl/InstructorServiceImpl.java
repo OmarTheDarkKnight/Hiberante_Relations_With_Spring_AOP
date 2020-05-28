@@ -36,7 +36,7 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public Instructor getByIdForInstructorForm(String theId) {
+	public Instructor getInstructorById(String theId) {
 		int instructorId = Integer.parseInt(theId);
 		return instructorDao.getById(instructorId);
 	}
