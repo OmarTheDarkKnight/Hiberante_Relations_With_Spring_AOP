@@ -5,8 +5,9 @@ import java.util.List;
 import com.bat.model.Instructor;
 
 public interface InstructorService {
-	public void save(Instructor newInstructor);
-	public List<Instructor> getAllInstructors();
-	public Instructor getInstructorFormData(String theId);
-	public void delete(String theID);
+	void save(Instructor newInstructor);
+	List<Instructor> getAllInstructors();
+	Instructor getInstructorFormData(String theId);
+	Instructor getInstructorCourses(String theInstructorId) throws Exception;
+	void delete(String theID);
 }

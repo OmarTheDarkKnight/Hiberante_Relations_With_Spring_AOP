@@ -1,14 +1,12 @@
 package com.bat.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import com.bat.dao.CourseDao;
 import com.bat.model.InstructorDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bat.alfred.Helper;
 import com.bat.dao.InstructorDao;
 import com.bat.model.Instructor;
 import com.bat.service.InstructorService;
@@ -20,9 +18,17 @@ import org.springframework.util.StringUtils;
 public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private InstructorDao instructorDao;
-	
+
 	@Autowired
-	private Helper helper;
+	private CourseDao courseDao;
+
+	/*
+	* Decryption of the id will be done here
+	* */
+	private Instructor getById(String theId) {
+		int instructorId = Integer.parseInt(theId);
+		return instructorDao.getById(instructorId);
+	}
 
 	@Override
 	public void save(Instructor newInstructor) {
@@ -43,13 +49,24 @@ public class InstructorServiceImpl implements InstructorService {
 	public Instructor getInstructorFormData(String theInstructorId) {
 		Instructor instructor = null;
 		if(!StringUtils.isEmpty(theInstructorId)) {
-			int instructorId = Integer.parseInt(theInstructorId);
-			instructor = instructorDao.getById(instructorId);
+			instructor = this.getById(theInstructorId);
 		} else {
 			instructor = new Instructor();
 			instructor.setInstructorDetails(new InstructorDetails());
 		}
 
+		return instructor;
+	}
+
+	@Override
+	public Instructor getInstructorCourses(String theInstructorId) throws Exception {
+		Instructor instructor = null;
+		if(!StringUtils.isEmpty(theInstructorId)) {
+			instructor = this.getById(theInstructorId);
+			instructor.setCourses(courseDao.getByInstructor(instructor.getId()));
+		} else {
+			throw new Exception("Invalid Request");
+		}
 		return instructor;
 	}
 

@@ -2,7 +2,6 @@ package com.bat.controller;
 
 import com.bat.model.Course;
 import com.bat.model.Instructor;
-import com.bat.model.InstructorDetails;
 import com.bat.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -82,17 +81,26 @@ public class InstructorController {
 	@PostMapping("/saveInstructor")
 	public String saveInstructor(
 			@Valid @ModelAttribute("instructor") Instructor theInstructor,
+			RedirectAttributes redirectAttr,
 			BindingResult bindingResult) {
 
-		if(bindingResult.hasErrors()) {
-			return helper.buildViewName(folderName, "instructorForm");
+		try {
+			if(bindingResult.hasErrors()) {
+				return helper.buildViewName(folderName, "instructorForm");
+			}
+			instructorService.save(theInstructor);
+		} catch (Exception exception) {
+			Map<String, String> messages = new HashMap<>();
+			messages.put("error", "Could not save instructor");
+			redirectAttr.addFlashAttribute("messages", messages);
+			return "redirect:/instructor/all";
 		}
-		instructorService.save(theInstructor);
+
 		return "redirect:/instructor/all";
 	}
 
 	@PostMapping("/delete")
-    public String deleteInstructor(@RequestParam("theId") String theId, Model model, RedirectAttributes redirectAttr) {
+    public String deleteInstructor(@RequestParam("theId") String theId, RedirectAttributes redirectAttr) {
         Map<String, String> messages = new HashMap<>();
         try{
             instructorService.delete(theId);
@@ -101,6 +109,7 @@ public class InstructorController {
             redirectAttr.addFlashAttribute("messages", messages);
             return "redirect:/instructor/all";
         }
+
         messages.put("success", "Instructor deleted successfully");
         redirectAttr.addFlashAttribute("messages", messages);
 	    return "redirect:/instructor/all";
@@ -108,23 +117,15 @@ public class InstructorController {
 
     @GetMapping("/courses")
     public String showInstructorCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
-        Map<String, String> messages = new HashMap<>();
-        if(!StringUtils.isEmpty(theId)) {
-            try{
-                Instructor instructor = instructorService.getById(theId);
-                List<Course> coursesOfTheInstructor = courseService.getByInstructor(instructor.getId());
-                instructor.setCourses(coursesOfTheInstructor);
-                model.addAttribute("instructor", instructor);
-            } catch (Exception exception) {
-                messages.put("error", exception.getMessage());
-                redirectAttr.addFlashAttribute("messages", messages);
-                return "redirect:/instructor/all";
-            }
-        } else {
-            messages.put("error", "Invalid request");
-            redirectAttr.addFlashAttribute("messages", messages);
-            return "redirect:/instructor/all";
-        }
+
+		try{
+			model.addAttribute("instructor", instructorService.getInstructorCourses(theId));
+		} catch (Exception exception) {
+			Map<String, String> messages = new HashMap<>();
+			messages.put("error", exception.getMessage());
+			redirectAttr.addFlashAttribute("messages", messages);
+			return "redirect:/instructor/all";
+		}
         return helper.buildViewName(folderName, "courses");
     }
 }
