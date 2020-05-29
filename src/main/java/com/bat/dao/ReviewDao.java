@@ -39,7 +39,7 @@ public class ReviewDao extends HelperDao {
         return avg.floatValue();
     }
 
-    public void delete(Review review) {
-        em.remove(review);
+    public void delete(int reviewId) {
+        em.remove(this.getById(reviewId));
     }
 }
