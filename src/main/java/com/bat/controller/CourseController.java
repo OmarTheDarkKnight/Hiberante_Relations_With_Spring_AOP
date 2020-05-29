@@ -34,7 +34,7 @@ public class CourseController {
 
     @GetMapping("/all")
     public String courseList(Model model) {
-        List<Course> courses = courseService.getAll();
+        List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         return alfred.buildViewName(folderName, "list");
     }
@@ -44,29 +44,7 @@ public class CourseController {
                                  @RequestParam(value = "parent", required = false) String theParentId,
                                  Model model, RedirectAttributes redirectAttr) {
         try {
-            Course course = null;
-            // If there's a course but no parent then it is an invalid request
-            // throw an exception for this scenario
-            if(!StringUtils.isEmpty(theId) && StringUtils.isEmpty(theParentId)) {
-                throw new Exception("Invalid request. No action available");
-            }
-            else if(!StringUtils.isEmpty(theId)) {
-                // If there's a course then fetch that course
-                // no need to check the parent here
-                course = courseService.getById(theId);
-            }
-            else {
-                // If there's no course then assign a new course object and check for parent
-                course = new Course();
-                if(!StringUtils.isEmpty(theParentId)) {
-                    // If there's parent then set that Instructor in the course
-                    course.setInstructor(instructorService.getById(theParentId));
-                } else {
-                    // If there's no parent then the instructor will also ne a new object
-                    course.setInstructor(new Instructor());
-                }
-            }
-            model.addAttribute("course", course);
+            model.addAttribute("course", courseService.getCourseWithInstructor(theId, theParentId));
         } catch (Exception exception) {
             Map<String, String> messages = new HashMap<String, String>();
             messages.put("error", exception.getMessage());

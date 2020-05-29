@@ -37,7 +37,7 @@ public class CourseDao extends HelperDao {
                 .list();
     }
 
-    public void delete(Course course) {
-        em.remove(course);
+    public void delete(int courseId) {
+        em.remove(this.getById(courseId));
     }
 }

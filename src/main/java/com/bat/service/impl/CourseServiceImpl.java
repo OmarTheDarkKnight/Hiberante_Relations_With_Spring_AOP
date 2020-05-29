@@ -1,15 +1,15 @@
 package com.bat.service.impl;
 
-import com.bat.alfred.Helper;
 import com.bat.dao.CourseDao;
+import com.bat.dao.InstructorDao;
+import com.bat.dao.ReviewDao;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.service.CourseService;
-import com.bat.service.InstructorService;
-import com.bat.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -20,43 +20,53 @@ public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Autowired
-    private Helper alfred;
+    private ReviewDao reviewDao;
 
     @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private InstructorService instructorService;
+    private InstructorDao instructorDao;
 
     @Override
     public void save(Course newCourse) {
-        if(newCourse.getInstructor().getEmail() != null) {
-            Instructor instructor = (Instructor) instructorService.getByEmail(newCourse.getInstructor().getEmail()).get(0);
-            newCourse.setInstructor(instructor);
+//        if(newCourse.getInstructor().getEmail() != null) {
+//            Instructor instructor = (Instructor) instructorService.getByEmail(newCourse.getInstructor().getEmail()).get(0);
+//            newCourse.setInstructor(instructor);
+//        }
+//        courseDao.save(newCourse);
+    }
+
+    @Override
+    public List<Course> getAllCourses() {
+        return this.setCourseRating(courseDao.getAll());
+    }
+
+    @Override
+    public Course getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception {
+        Course course = null;
+        // If there's a course but an instructor then it is an invalid request
+        // throw an exception for this scenario
+        if(!StringUtils.isEmpty(theCourseId) && StringUtils.isEmpty(theInstructorId)) {
+            throw new Exception("Invalid request. No action available");
         }
-        courseDao.save(newCourse);
-    }
+        else if(!StringUtils.isEmpty(theCourseId)) {
+            // If there's a course then fetch that course
+            // no need to check for the instructor here
+            int courseId = Integer.parseInt(theCourseId);
+            course = this.setCourseRating(courseDao.getById(courseId));
+        }
+        else {
+            // If there's no course then assign a new course object and check instructor
+            course = new Course();
+            if(!StringUtils.isEmpty(theInstructorId)) {
+                // If there's an instructor then set that Instructor in the course
+                int instructorId = Integer.parseInt(theInstructorId);
+                course.setInstructor(instructorDao.getById(instructorId));
+            } else {
+                // If there's no parent then the instructor will also ne a new object
+                course.setInstructor(new Instructor());
+            }
+        }
 
-    @Override
-    public List getAll() {
-        return this.setCourseRating(courseDao.get(""));
-    }
-
-    @Override
-    public Course getById(String theId) {
-        int courseId = Integer.parseInt(theId);
-        List course = courseDao.get("id = " + courseId);
-        return course.isEmpty() ? null : (Course)this.setCourseRating(course).get(0);
-    }
-
-    @Override
-    public List getByTitle(String title) {
-        return this.setCourseRating(courseDao.get(alfred.whereLike(new String[]{"title"}, '%' + title + '%')));
-    }
-
-    @Override
-    public List getByInstructor(int instructorId) {
-        return this.setCourseRating(courseDao.get(alfred.where(new String[]{"instructor_id"}, Integer.toString(instructorId))));
+        return course;
     }
 
     @Override
@@ -67,8 +77,13 @@ public class CourseServiceImpl implements CourseService {
 
     private List<Course> setCourseRating(List<Course> courses) {
         for(Course c: courses) {
-            c.setRating(reviewService.getAvgRatingByCourse(c.getId()));
+            c.setRating(reviewDao.getAvgRatingByCourse(c.getId()));
         }
         return courses;
+    }
+
+    private Course setCourseRating(Course course) {
+        course.setRating(reviewDao.getAvgRatingByCourse(course.getId()));
+        return course;
     }
 }

@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface CourseService {
     public void save(Course newCourse);
-    public List getAll();
-    public Course getById(String theId);
-    public List getByTitle(String title);
-    public List getByInstructor(int instructorId);
+    public List<Course> getAllCourses();
+    public Course getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception;
     public void delete(String theId);
 }
