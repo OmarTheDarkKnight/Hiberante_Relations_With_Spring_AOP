@@ -49,30 +49,33 @@ public class InstructorController {
 	}
 	
 	@GetMapping("/all")
-	public String getInstructorList(Model model) {
-		List<Instructor> instructors = instructorService.getAll();
-		model.addAttribute("instructors", instructors);
+	public String getInstructorList(Model model, RedirectAttributes redirectAttr) {
+		try{
+			List<Instructor> instructors = instructorService.getAllInstructors();
+			model.addAttribute("instructors", instructors);
+		} catch (Exception exception) {
+			Map<String, String> messages = new HashMap<>();
+			messages.put("error", "Could not find any instructor");
+			redirectAttr.addFlashAttribute("messages", messages);
+			return "redirect:/instructor/all";
+		}
+
 		return helper.buildViewName(folderName, "list");
 	}
 
 	@GetMapping("/instructor-form")
 	public String showInstructorForm(@RequestParam(value = "target", required = false) String theId,
 									 Model model, RedirectAttributes redirectAttr) {
-		if(!StringUtils.isEmpty(theId)) {
-			Map<String, String> messages = new HashMap<>();
-			try{
-				Instructor instructor = instructorService.getById(theId);
-				model.addAttribute("instructor", instructor);
-			} catch (Exception exception) {
-				messages.put("error", "Could not delete resource");
-				redirectAttr.addFlashAttribute("messages", messages);
-				return "redirect:/instructor/all";
-			}
-		} else {
-			Instructor instructor = new Instructor();
-			instructor.setInstructorDetails(new InstructorDetails());
+		try{
+			Instructor instructor = instructorService.getInstructorFormData(theId);
 			model.addAttribute("instructor", instructor);
+		} catch (Exception exception) {
+			Map<String, String> messages = new HashMap<>();
+			messages.put("error", "Could not find resource");
+			redirectAttr.addFlashAttribute("messages", messages);
+			return "redirect:/instructor/all";
 		}
+
 		return helper.buildViewName(folderName, "instructorForm");
 	}
 

@@ -1,7 +1,10 @@
 package com.bat.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.bat.model.InstructorDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,7 @@ import com.bat.dao.InstructorDao;
 import com.bat.model.Instructor;
 import com.bat.service.InstructorService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -36,9 +40,17 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public Instructor getInstructorById(String theId) {
-		int instructorId = Integer.parseInt(theId);
-		return instructorDao.getById(instructorId);
+	public Instructor getInstructorFormData(String theInstructorId) {
+		Instructor instructor = null;
+		if(!StringUtils.isEmpty(theInstructorId)) {
+			int instructorId = Integer.parseInt(theInstructorId);
+			instructor = instructorDao.getById(instructorId);
+		} else {
+			instructor = new Instructor();
+			instructor.setInstructorDetails(new InstructorDetails());
+		}
+
+		return instructor;
 	}
 
 	@Override

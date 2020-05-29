@@ -7,6 +7,6 @@ import com.bat.model.Instructor;
 public interface InstructorService {
 	public void save(Instructor newInstructor);
 	public List<Instructor> getAllInstructors();
-	public Instructor getInstructorById(String theId);
+	public Instructor getInstructorFormData(String theId);
 	public void delete(String theID);
 }
