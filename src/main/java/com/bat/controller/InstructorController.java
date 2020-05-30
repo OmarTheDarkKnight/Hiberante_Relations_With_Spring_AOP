@@ -1,13 +1,11 @@
 package com.bat.controller;
 
-import com.bat.model.Course;
+import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Instructor;
-import com.bat.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +25,6 @@ public class InstructorController {
 
 	@Autowired
 	private InstructorService instructorService;
-
-	@Autowired
-	private CourseService courseService;
 	
 	@Autowired
 	private Helper helper;
@@ -50,13 +45,11 @@ public class InstructorController {
 	@GetMapping("/all")
 	public String getInstructorList(Model model, RedirectAttributes redirectAttr) {
 		try{
-			List<Instructor> instructors = instructorService.getAllInstructors();
+			List<InstructorWithDetailsDto> instructors = instructorService.getAllInstructorsWithDetails();
 			model.addAttribute("instructors", instructors);
 		} catch (Exception exception) {
-			Map<String, String> messages = new HashMap<>();
-			messages.put("error", "Could not find any instructor");
-			redirectAttr.addFlashAttribute("messages", messages);
-			return "redirect:/instructor/all";
+			System.out.println(exception.getMessage());
+			return "redirect:/";
 		}
 
 		return helper.buildViewName(folderName, "list");
