@@ -48,11 +48,11 @@
 				<!-- Create url for showing courses for that instructor -->
 				<c:url var="courseLink" value="/instructor/courses?target=${instructor.id}" />
 				<tr>
-					<td>${instructor.firstName}</td>
-					<td>${instructor.lastName}</td>
+					<td>${instructor.first_name}</td>
+					<td>${instructor.last_name}</td>
 					<td>${instructor.email}</td>
-					<td>${instructor.instructorDetails.hobby}</td>
-					<td>${instructor.instructorDetails.youTubeChannel}</td>
+					<td>${instructor.hobby}</td>
+					<td>${instructor.youtube_channel}</td>
 					<td>
 						<a href="${courseLink}">See courses</a>
 						|
