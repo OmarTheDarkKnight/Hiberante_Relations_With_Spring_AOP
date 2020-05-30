@@ -1,5 +1,7 @@
 package com.bat.dao;
 
+import com.bat.dto.InstructorDto;
+import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Instructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +21,15 @@ public class InstructorDao extends HelperDao {
 		return em.find(Instructor.class, mapID);
 	}
 
-	public List<Instructor> getAll() {
-		return hibernateQuery("SELECT * FROM instructor", Instructor.class)
+	public List<InstructorDto> getAll() {
+		return hibernateQuery("SELECT id, first_name, last_name, email FROM instructor", InstructorDto.class)
+				.list();
+	}
+
+	public List<InstructorWithDetailsDto> getAllWithDetails() {
+		return hibernateQuery("SELECT i.id, i.first_name, i.last_name, i.email, i.instructor_detail_id, d.hobby, d.youtube_channel" +
+				" FROM instructor i" +
+				" JOIN instructor_detail d ON d.id = i.instructor_detail_id", InstructorWithDetailsDto.class)
 				.list();
 	}
 
