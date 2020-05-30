@@ -2,8 +2,8 @@ package com.bat.dto;
 
 import java.io.Serializable;
 
-public class InstructorWithDetailsDto implements Serializable {
-    private int id;
+public class InstructorWithDetailsDto extends BaseDto implements Serializable {
+    private String id;
     private String first_name;
     private String last_name;
     private String email;
@@ -11,11 +11,15 @@ public class InstructorWithDetailsDto implements Serializable {
     private String youtube_channel;
     private String hobby;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     public void setId(int id) {
+        this.id = String.valueOf(id);
+    }
+
+    public void setEncId(String id) {
         this.id = id;
     }
 
