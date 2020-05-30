@@ -3,6 +3,8 @@ package com.bat.service.impl;
 import java.util.List;
 
 import com.bat.dao.CourseDao;
+import com.bat.dto.InstructorDto;
+import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.InstructorDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +43,12 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<Instructor> getAllInstructors() {
-		return instructorDao.getAll();
+	public List<InstructorWithDetailsDto> getAllInstructorsWithDetails() {
+		List<InstructorWithDetailsDto> instructorWithDetailsDtos = instructorDao.getAllWithDetails();
+		instructorWithDetailsDtos.forEach(dto->{
+			dto.setEncId(dto.encrypt(dto.getId(), "instructor"));
+		});
+		return instructorWithDetailsDtos;
 	}
 
 	@Override
