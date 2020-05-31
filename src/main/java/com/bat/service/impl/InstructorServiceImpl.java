@@ -3,6 +3,7 @@ package com.bat.service.impl;
 import java.util.List;
 
 import com.bat.dao.CourseDao;
+import com.bat.dto.BaseDto;
 import com.bat.dto.InstructorDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.InstructorDetails;
@@ -23,6 +24,8 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private CourseDao courseDao;
+
+	private String instructorSalt = "instructor";
 
 	/*
 	* Decryption of the id will be done here
@@ -46,22 +49,32 @@ public class InstructorServiceImpl implements InstructorService {
 	public List<InstructorWithDetailsDto> getAllInstructorsWithDetails() {
 		List<InstructorWithDetailsDto> instructorWithDetailsDtos = instructorDao.getAllWithDetails();
 		instructorWithDetailsDtos.forEach(dto->{
-			dto.setEncId(dto.encrypt(dto.getId(), "instructor"));
+			dto.setEncId(dto.encrypt(dto.getId(), instructorSalt));
 		});
 		return instructorWithDetailsDtos;
 	}
 
 	@Override
-	public Instructor getInstructorFormData(String theInstructorId) {
-		Instructor instructor = null;
+	public InstructorWithDetailsDto getInstructorFormData(String theInstructorId) {
+		InstructorWithDetailsDto instructorWithDetailsDto = new InstructorWithDetailsDto();
 		if(!StringUtils.isEmpty(theInstructorId)) {
-			instructor = this.getById(theInstructorId);
-		} else {
-			instructor = new Instructor();
-			instructor.setInstructorDetails(new InstructorDetails());
+			Instructor instructor = instructorDao.getById(instructorWithDetailsDto.decrypt(theInstructorId, instructorSalt));
+
+			// converting from entity to dto object
+			instructorWithDetailsDto.setEncId(
+					instructorWithDetailsDto.encrypt(String.valueOf(instructor.getId()), // get the instructor id, convert to string and set it as first parameter for encrypt method
+					instructorSalt) // second parameter of the encrypt method
+			);
+			instructorWithDetailsDto.setFirst_name(instructor.getFirstName());
+			instructorWithDetailsDto.setLast_name(instructor.getLastName());
+			instructorWithDetailsDto.setEmail(instructor.getEmail());
+
+			instructorWithDetailsDto.setInstructor_detail_id(instructor.getInstructorDetails().getId());
+			instructorWithDetailsDto.setHobby(instructor.getInstructorDetails().getHobby());
+			instructorWithDetailsDto.setYoutube_channel(instructor.getInstructorDetails().getYouTubeChannel());
 		}
 
-		return instructor;
+		return instructorWithDetailsDto;
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.bat.model.Instructor;
 public interface InstructorService {
 	void save(Instructor newInstructor);
 	List<InstructorWithDetailsDto> getAllInstructorsWithDetails();
-	Instructor getInstructorFormData(String theId);
+	InstructorWithDetailsDto getInstructorFormData(String theId);
 	Instructor getInstructorCourses(String theInstructorId) throws Exception;
 	void delete(String theID);
 }
