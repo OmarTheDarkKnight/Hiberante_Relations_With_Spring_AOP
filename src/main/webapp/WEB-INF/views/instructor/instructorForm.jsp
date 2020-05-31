@@ -16,17 +16,17 @@
     <%--@elvariable id="instructor" type="java"--%>
     <form:form action="saveInstructor" method="post" modelAttribute="instructor">
         <form:hidden path="id" />
-        <form:hidden path="instructorDetails.id" />
+        <form:hidden path="instructor_detail_id" />
         <div>
-            <form:label path="firstName" cssErrorClass="error">First Name : </form:label>
-            <form:input path="firstName" />
-            <form:errors path="firstName" cssClass="error"/>
+            <form:label path="first_name" cssErrorClass="error">First Name : </form:label>
+            <form:input path="first_name" />
+            <form:errors path="first_name" cssClass="error"/>
         </div>
 
         <div>
-            <form:label path="lastName" cssErrorClass="error">Last Name : </form:label>
-            <form:input path="lastName" />
-            <form:errors path="lastName" cssClass="error"/>
+            <form:label path="last_name" cssErrorClass="error">Last Name : </form:label>
+            <form:input path="last_name" />
+            <form:errors path="last_name" cssClass="error"/>
         </div>
 
         <div>
@@ -36,15 +36,15 @@
         </div>
 
         <div>
-            <form:label path="instructorDetails.hobby" cssErrorClass="error">Hobby : </form:label>
-            <form:input path="instructorDetails.hobby" />
-            <form:errors path="instructorDetails.hobby" cssClass="error"/>
+            <form:label path="hobby" cssErrorClass="error">Hobby : </form:label>
+            <form:input path="hobby" />
+            <form:errors path="hobby" cssClass="error"/>
         </div>
 
         <div>
-            <form:label path="instructorDetails.youTubeChannel" cssErrorClass="error">Channel : </form:label>
-            <form:input path="instructorDetails.youTubeChannel" />
-            <form:errors path="instructorDetails.youTubeChannel" cssClass="error"/>
+            <form:label path="youtube_channel" cssErrorClass="error">Channel : </form:label>
+            <form:input path="youtube_channel" />
+            <form:errors path="youtube_channel" cssClass="error"/>
         </div>
 
         <div>
