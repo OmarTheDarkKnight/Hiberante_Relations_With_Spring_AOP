@@ -59,7 +59,7 @@ public class InstructorController {
 	public String showInstructorForm(@RequestParam(value = "target", required = false) String theId,
 									 Model model, RedirectAttributes redirectAttr) {
 		try{
-			Instructor instructor = instructorService.getInstructorFormData(theId);
+			InstructorWithDetailsDto instructor = instructorService.getInstructorFormData(theId);
 			model.addAttribute("instructor", instructor);
 		} catch (Exception exception) {
 			Map<String, String> messages = new HashMap<>();
