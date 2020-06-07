@@ -1,15 +1,35 @@
 package com.bat.dto;
 
+import com.bat.annotations.CustomEmail;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class InstructorWithDetailsDto extends BaseDto implements Serializable {
     private int id;
     private String encId;
+
+    @NotNull(message = "First name is required")
+    @Size(min = 1, max = 256, message = "First name must be at least 1 to maximum 256 characters")
     private String first_name;
+
+    @NotNull(message = "Last name is required")
+    @Size(min = 1, max = 256, message = "Last name must be at least 1 to maximum 256 characters")
     private String last_name;
+
+    @NotNull(message = "Email is required")
+    @CustomEmail
     private String email;
+
     private int instructor_detail_id;
+
+    @NotNull(message = "Channel is required")
+    @Size(min = 3, message = "Channel can not be less than three characters")
+    @Pattern(regexp = "^((https):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]+)+(\\/[a-zA-Z0-9#]+\\/?)*$", message = "Invalid channel url")
     private String youtube_channel;
+
     private String hobby;
 
     public int getId() {

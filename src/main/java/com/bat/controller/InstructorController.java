@@ -1,7 +1,6 @@
 package com.bat.controller;
 
 import com.bat.dto.InstructorWithDetailsDto;
-import com.bat.model.Instructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -73,7 +72,7 @@ public class InstructorController {
 
 	@PostMapping("/saveInstructor")
 	public String saveInstructor(
-			@Valid @ModelAttribute("instructor") Instructor theInstructor,
+			@Valid @ModelAttribute("instructor") InstructorWithDetailsDto instructorWithDetailsDto,
 			RedirectAttributes redirectAttr,
 			BindingResult bindingResult) {
 
@@ -81,12 +80,11 @@ public class InstructorController {
 			if(bindingResult.hasErrors()) {
 				return helper.buildViewName(folderName, "instructorForm");
 			}
-			instructorService.save(theInstructor);
+			instructorService.save(instructorWithDetailsDto);
 		} catch (Exception exception) {
 			Map<String, String> messages = new HashMap<>();
 			messages.put("error", "Could not save instructor");
 			redirectAttr.addFlashAttribute("messages", messages);
-			return "redirect:/instructor/all";
 		}
 
 		return "redirect:/instructor/all";

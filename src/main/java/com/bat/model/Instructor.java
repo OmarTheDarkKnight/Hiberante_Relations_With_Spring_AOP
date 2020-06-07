@@ -27,22 +27,22 @@ public class Instructor {
 	@Column(name="id")
 	private int id;
 
-	@NotNull(message = "First name is required")
-	@Size(min = 1, max = 256, message = "First name must be at least 1 to maximum 256 characters")
+//	@NotNull(message = "First name is required")
+//	@Size(min = 1, max = 256, message = "First name must be at least 1 to maximum 256 characters")
 	@Column(name="first_name")
 	private String firstName;
 
-	@NotNull(message = "Last name is required")
-	@Size(min = 1, max = 256, message = "Last name must be at least 1 to maximum 256 characters")
+//	@NotNull(message = "Last name is required")
+//	@Size(min = 1, max = 256, message = "Last name must be at least 1 to maximum 256 characters")
 	@Column(name="last_name")
 	private String lastName;
 
-	@NotNull(message = "Email is required")
-	@CustomEmail
+//	@NotNull(message = "Email is required")
+//	@CustomEmail
 	@Column(name="email")
 	private String email;
 
-	@Valid
+//	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="instructor_detail_id")
 	private InstructorDetails instructorDetails;
