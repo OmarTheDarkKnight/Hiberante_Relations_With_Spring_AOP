@@ -46,7 +46,7 @@
 			</tr>
 			<c:forEach var="instructor" items="${instructors}">
 				<!-- Create url for showing courses for that instructor -->
-				<c:url var="courseLink" value="/instructor/courses?target=${instructor.id}" />
+				<c:url var="courseLink" value="/instructor/courses?target=${instructor.encId}" />
 				<tr>
 					<td>${instructor.first_name}</td>
 					<td>${instructor.last_name}</td>
@@ -56,9 +56,9 @@
 					<td>
 						<a href="${courseLink}">See courses</a>
 						|
-						<a href="${updateLink}?target=${instructor.id}">Update</a>
+						<a href="${updateLink}?target=${instructor.encId}">Update</a>
 						|
-						<a onclick="deleteSubmit(${instructor.id})"
+						<a onclick="deleteSubmit(${instructor.encId})"
 								href="javascript:void(0)">Delete</a>
 					</td>
 				</tr>

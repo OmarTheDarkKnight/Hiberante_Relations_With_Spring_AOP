@@ -15,7 +15,7 @@
 <div>
     <%--@elvariable id="instructor" type="java"--%>
     <form:form action="saveInstructor" method="post" modelAttribute="instructor">
-        <form:hidden path="id" />
+        <form:hidden path="encId" />
         <form:hidden path="instructor_detail_id" />
         <div>
             <form:label path="first_name" cssErrorClass="error">First Name : </form:label>
