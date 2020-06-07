@@ -36,20 +36,32 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public void save(Instructor newInstructor) {
-//		if(newInstructor.getId() == 0) {
-//
-//		} else {
-//
-//		}
-//		instructorDao.insert(newInstructor);
+	public void save(InstructorWithDetailsDto newInstructorWithDetails) {
+		InstructorDetails instructorDetails = new InstructorDetails(
+				newInstructorWithDetails.getYoutube_channel(),
+				newInstructorWithDetails.getHobby()
+		);
+
+		Instructor newInstructor = new Instructor(
+				newInstructorWithDetails.getFirst_name(),
+				newInstructorWithDetails.getLast_name(),
+				newInstructorWithDetails.getEmail()
+		);
+		newInstructor.setInstructorDetails(instructorDetails);
+		if(StringUtils.isEmpty(newInstructorWithDetails.getEncId())) {
+			instructorDao.insert(newInstructor);
+		} else {
+			newInstructor.setId(newInstructorWithDetails.decrypt(newInstructorWithDetails.getEncId(), instructorSalt));
+			instructorDetails.setId(newInstructorWithDetails.getInstructor_detail_id());
+			instructorDao.update(newInstructor);
+		}
 	}
 
 	@Override
 	public List<InstructorWithDetailsDto> getAllInstructorsWithDetails() {
 		List<InstructorWithDetailsDto> instructorWithDetailsDtos = instructorDao.getAllWithDetails();
 		instructorWithDetailsDtos.forEach(dto->{
-			dto.setEncId(dto.encrypt(dto.getId(), instructorSalt));
+			dto.setEncId(dto.encrypt(String.valueOf(dto.getId()), instructorSalt));
 		});
 		return instructorWithDetailsDtos;
 	}
