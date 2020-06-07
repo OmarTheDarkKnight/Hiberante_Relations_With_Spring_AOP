@@ -3,7 +3,8 @@ package com.bat.dto;
 import java.io.Serializable;
 
 public class InstructorWithDetailsDto extends BaseDto implements Serializable {
-    private String id;
+    private int id;
+    private String encId;
     private String first_name;
     private String last_name;
     private String email;
@@ -11,16 +12,20 @@ public class InstructorWithDetailsDto extends BaseDto implements Serializable {
     private String youtube_channel;
     private String hobby;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = String.valueOf(id);
+        this.id = id;
     }
 
     public void setEncId(String id) {
-        this.id = id;
+        this.encId = id;
+    }
+
+    public String getEncId() {
+        return encId;
     }
 
     public String getFirst_name() {
