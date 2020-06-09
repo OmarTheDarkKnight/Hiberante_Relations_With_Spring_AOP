@@ -1,12 +1,14 @@
 package com.bat.dto;
 
 import com.bat.annotations.CustomEmail;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Component
 public class InstructorWithDetailsDto extends BaseDto implements Serializable {
     private int id;
     private String encId;

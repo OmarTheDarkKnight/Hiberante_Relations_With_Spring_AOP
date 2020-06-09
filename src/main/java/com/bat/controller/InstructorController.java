@@ -73,8 +73,8 @@ public class InstructorController {
 	@PostMapping("/saveInstructor")
 	public String saveInstructor(
 			@Valid @ModelAttribute("instructor") InstructorWithDetailsDto instructorWithDetailsDto,
-			RedirectAttributes redirectAttr,
-			BindingResult bindingResult) {
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttr) {
 
 		try {
 			if(bindingResult.hasErrors()) {

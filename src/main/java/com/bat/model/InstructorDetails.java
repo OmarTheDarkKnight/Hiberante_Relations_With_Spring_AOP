@@ -8,9 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="instructor_detail")
@@ -20,9 +17,6 @@ public class InstructorDetails {
 	@Column(name="id")
 	private int id;
 
-//	@NotNull(message = "Channel is required")
-//	@Size(min = 3, message = "Channel can not be less than three characters")
-//	@Pattern(regexp = "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+(\\.[a-z]+)+(\\/[a-zA-Z0-9#]+\\/?)*$", message = "Invalid channel url")
 	@Column(name="youtube_channel")
 	private String youTubeChannel;
 	

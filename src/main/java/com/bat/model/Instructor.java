@@ -1,7 +1,5 @@
 package com.bat.model;
 
-import com.bat.annotations.CustomEmail;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="instructor")
@@ -27,22 +22,15 @@ public class Instructor {
 	@Column(name="id")
 	private int id;
 
-//	@NotNull(message = "First name is required")
-//	@Size(min = 1, max = 256, message = "First name must be at least 1 to maximum 256 characters")
 	@Column(name="first_name")
 	private String firstName;
 
-//	@NotNull(message = "Last name is required")
-//	@Size(min = 1, max = 256, message = "Last name must be at least 1 to maximum 256 characters")
 	@Column(name="last_name")
 	private String lastName;
 
-//	@NotNull(message = "Email is required")
-//	@CustomEmail
 	@Column(name="email")
 	private String email;
 
-//	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="instructor_detail_id")
 	private InstructorDetails instructorDetails;
