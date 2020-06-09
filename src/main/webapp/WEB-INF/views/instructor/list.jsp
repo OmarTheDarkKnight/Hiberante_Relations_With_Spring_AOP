@@ -58,7 +58,7 @@
 						|
 						<a href="${updateLink}?target=${instructor.encId}">Update</a>
 						|
-						<a onclick="deleteSubmit(${instructor.encId})"
+						<a onclick="deleteSubmit('${instructor.encId}')"
 								href="javascript:void(0)">Delete</a>
 					</td>
 				</tr>

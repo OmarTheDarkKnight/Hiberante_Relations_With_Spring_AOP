@@ -25,6 +25,9 @@ public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private CourseDao courseDao;
 
+	@Autowired
+	private BaseDto baseDto;
+
 	private String instructorSalt = "instructor";
 
 	/*
@@ -103,7 +106,7 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public void delete(String theID) {
-		int instructorId = Integer.parseInt(theID);
+		int instructorId = baseDto.decrypt(theID, instructorSalt);
 		instructorDao.delete(instructorId);
 	}
 }
