@@ -1,21 +1,15 @@
 package com.bat.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class InstructorDto implements Serializable {
+public class InstructorWithCourseDto extends BaseDto implements Serializable {
     private int id;
+    private String encId;
     private String first_name;
     private String last_name;
     private String email;
-
-    public InstructorDto() { }
-
-    public InstructorDto(int id, String first_Name, String lastName, String email) {
-        this.id = id;
-        this.first_name = first_Name;
-        this.last_name = lastName;
-        this.email = email;
-    }
+    private List<CourseDto> courses;
 
     public int getId() {
         return id;
@@ -23,6 +17,14 @@ public class InstructorDto implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getEncId() {
+        return encId;
+    }
+
+    public void setEncId(String encId) {
+        this.encId = encId;
     }
 
     public String getFirst_name() {
@@ -47,5 +49,13 @@ public class InstructorDto implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<CourseDto> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseDto> courses) {
+        this.courses = courses;
     }
 }
