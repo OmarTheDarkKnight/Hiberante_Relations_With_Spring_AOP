@@ -26,14 +26,14 @@ public class ReviewDao extends HelperDao {
     }
 
     public List<Review> getByCourseAndRating(int  courseId, float rating) {
-        return hibernateQuery("SELECT * FROM review WHERE course_id=:courseId AND rating:=rating", Review.class)
+        return hibernateQuery("SELECT * FROM review WHERE course_id=:courseId AND rating=:rating", Review.class)
                 .setParameter("courseId", courseId)
                 .setParameter("rating", rating)
                 .list();
     }
 
     public float getAvgRatingByCourse(int courseId) {
-        Double avg = (Double) hibernateQuery("SELECT COALESCE(avg(rating), 0) FROM Review WHERE course_id:=courseId", Review.class)
+        Double avg = (Double) hibernateQuery("SELECT IFNULL(avg(rating), 0) FROM review WHERE course_id=:courseId")
                 .setParameter("courseId", courseId)
                 .getSingleResult();
         return avg.floatValue();
