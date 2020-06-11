@@ -19,13 +19,11 @@
             <br>
             Email: ${instructor.email}
             <tr>
-                <th>ID</th>
                 <th>Title</th>
                 <th>Rating</th>
             </tr>
             <c:forEach var="course" items="${instructor.courses}">
                 <tr>
-                    <td>${course.encId}</td>
                     <td>${course.title}</td>
                     <td>${course.rating}</td>
                 </tr>
