@@ -15,13 +15,17 @@
 <div>
     <div class="table">
         <table border="1">
-            Courses taken by ${instructor.firstName} ${instructor.lastName}
+            Courses taken by ${instructor.first_name} ${instructor.last_name}
+            <br>
+            Email: ${instructor.email}
             <tr>
+                <th>ID</th>
                 <th>Title</th>
                 <th>Rating</th>
             </tr>
             <c:forEach var="course" items="${instructor.courses}">
                 <tr>
+                    <td>${course.encId}</td>
                     <td>${course.title}</td>
                     <td>${course.rating}</td>
                 </tr>
@@ -30,7 +34,7 @@
     </div>
 
     <div>
-        <a href="${pageContext.request.contextPath}/course/course-form?parent=${instructor.id}">Add a new course</a>
+        <a href="${pageContext.request.contextPath}/course/course-form?parent=${instructor.encId}">Add a new course</a>
     </div>
 </div>
 
