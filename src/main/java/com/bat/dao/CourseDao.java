@@ -1,5 +1,6 @@
 package com.bat.dao;
 
+import com.bat.dto.CourseDto;
 import com.bat.model.Course;
 import org.springframework.stereotype.Repository;
 
@@ -31,8 +32,8 @@ public class CourseDao extends HelperDao {
                 .list();
     }
 
-    public List<Course> getByInstructor(int instructorId) {
-        return hibernateQuery("SELECT * FROM course WHERE instructor_id=:instructorId", Course.class)
+    public List<CourseDto> getByInstructor(int instructorId) {
+        return hibernateQuery("SELECT id, title FROM course WHERE instructor_id=:instructorId", CourseDto.class)
                 .setParameter("instructorId", instructorId)
                 .list();
     }
