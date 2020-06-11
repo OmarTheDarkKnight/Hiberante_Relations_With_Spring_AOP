@@ -1,6 +1,5 @@
 package com.bat.dao;
 
-import com.bat.dto.InstructorDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Instructor;
 import org.springframework.stereotype.Repository;
@@ -21,11 +20,6 @@ public class InstructorDao extends HelperDao {
 		return em.find(Instructor.class, mapID);
 	}
 
-	public List<InstructorDto> getAll() {
-		return hibernateQuery("SELECT id, first_name, last_name, email FROM instructor", InstructorDto.class)
-				.list();
-	}
-
 	public List<InstructorWithDetailsDto> getAllWithDetails() {
 		return hibernateQuery("SELECT i.id, i.first_name, i.last_name, i.email, i.instructor_detail_id, d.hobby, d.youtube_channel" +
 				" FROM instructor i" +
@@ -33,11 +27,11 @@ public class InstructorDao extends HelperDao {
 				.list();
 	}
 
-	public List<Instructor> getBySimilarEmail(String email) {
-		return hibernateQuery("SELECT * FROM instructor WHERE email LIKE %:email%", Instructor.class)
-				.setParameter("email", email)
-				.list();
-	}
+//	public List<Instructor> getBySimilarEmail(String email) {
+//		return hibernateQuery("SELECT * FROM instructor WHERE email LIKE %:email%", Instructor.class)
+//				.setParameter("email", email)
+//				.list();
+//	}
 
 	public Instructor getByEmail(String email) {
 		return (Instructor) hibernateQuery("SELECT * FROM instructor WHERE email =:email", Instructor.class)
@@ -45,11 +39,11 @@ public class InstructorDao extends HelperDao {
 				.uniqueResult();
 	}
 
-	public List<Instructor> getByName(String name) {
-		return hibernateQuery("SELECT * FROM instructor WHERE firstName LIKE %:name% OR lastName LKE %:name%", Instructor.class)
-				.setParameter("name", name)
-				.list();
-	}
+//	public List<Instructor> getByName(String name) {
+//		return hibernateQuery("SELECT * FROM instructor WHERE firstName LIKE %:name% OR lastName LKE %:name%", Instructor.class)
+//				.setParameter("name", name)
+//				.list();
+//	}
 
 	public void delete(int instructorId) {
 		em.remove(this.getById(instructorId));
