@@ -2,14 +2,12 @@ package com.bat.controller;
 
 import com.bat.alfred.Helper;
 import com.bat.model.Course;
-import com.bat.model.Instructor;
 import com.bat.service.CourseService;
 import com.bat.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -47,8 +44,7 @@ public class CourseController {
 
     @GetMapping("/all")
     public String courseList(Model model) {
-        List<Course> courses = courseService.getAllCourses();
-        model.addAttribute("courses", courses);
+        model.addAttribute("courses", courseService.getAllCourses());
         return alfred.buildViewName(folderName, "list");
     }
 
