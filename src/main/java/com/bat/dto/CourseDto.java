@@ -7,6 +7,10 @@ public class CourseDto extends BaseDto implements Serializable {
     private String encId;
     private String title;
     private float rating;
+    private int instructor_id;
+    private String encInstructor_id;
+    private String name;
+    private String email;
 
     public int getId() {
         return id;
@@ -38,5 +42,37 @@ public class CourseDto extends BaseDto implements Serializable {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public int getInstructor_id() {
+        return instructor_id;
+    }
+
+    public void setInstructor_id(int instructor_id) {
+        this.instructor_id = instructor_id;
+    }
+
+    public String getEncInstructor_id() {
+        return encInstructor_id;
+    }
+
+    public void setEncInstructor_id(String encInstructor_id) {
+        this.encInstructor_id = encInstructor_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
