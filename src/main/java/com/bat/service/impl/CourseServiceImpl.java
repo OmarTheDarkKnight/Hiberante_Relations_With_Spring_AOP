@@ -3,6 +3,8 @@ package com.bat.service.impl;
 import com.bat.dao.CourseDao;
 import com.bat.dao.InstructorDao;
 import com.bat.dao.ReviewDao;
+import com.bat.dto.BaseDto;
+import com.bat.dto.CourseDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.service.CourseService;
@@ -23,7 +25,13 @@ public class CourseServiceImpl implements CourseService {
     private ReviewDao reviewDao;
 
     @Autowired
+    private BaseDto baseDto;
+
+    @Autowired
     private InstructorDao instructorDao;
+
+    private String courseSalt = "course";
+    private String instructorSalt = "parent";
 
     @Override
     public void save(Course newCourse) {
@@ -35,8 +43,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourses() {
-        return this.setCourseRating(courseDao.getAll());
+    public List<CourseDto> getAllCourses() {
+        List<CourseDto> courseDtoList = courseDao.getAll();
+        courseDtoList.forEach(courseDto -> {
+            int courseId = courseDto.getId();
+            courseDto.setEncId(baseDto.encrypt(String.valueOf(courseId), courseSalt));
+            courseDto.setRating(reviewDao.getAvgRatingByCourse(courseId));
+            courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(courseDto.getInstructor_id()), instructorSalt));
+        });
+        return courseDtoList;
     }
 
     @Override
