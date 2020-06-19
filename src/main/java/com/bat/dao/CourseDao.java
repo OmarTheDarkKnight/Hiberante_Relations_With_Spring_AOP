@@ -21,8 +21,10 @@ public class CourseDao extends HelperDao {
         return em.find(Course.class, courseId);
     }
 
-    public List<Course> getAll() {
-        return hibernateQuery("SELECT * FROM course", Course.class)
+    public List<CourseDto> getAll() {
+        return hibernateQuery("SELECT c.id as id, c.title as title, c.instructor_id as instructor_id," +
+                " concat(i.first_name, ' ', i.last_name) as name, i.email as email" +
+                " FROM course c JOIN instructor i ON i.id = c.instructor_id", CourseDto.class)
                 .list();
     }
 
