@@ -55,33 +55,29 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception {
-        Course course = null;
-        // If there's a course but an instructor then it is an invalid request
-        // throw an exception for this scenario
-        if(!StringUtils.isEmpty(theCourseId) && StringUtils.isEmpty(theInstructorId)) {
-            throw new Exception("Invalid request. No action available");
-        }
-        else if(!StringUtils.isEmpty(theCourseId)) {
-            // If there's a course then fetch that course
-            // no need to check for the instructor here
-            int courseId = Integer.parseInt(theCourseId);
-            course = this.setCourseRating(courseDao.getById(courseId));
-        }
-        else {
-            // If there's no course then assign a new course object and check instructor
-            course = new Course();
+    public CourseDto getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception {
+        CourseDto courseDto = new CourseDto();
+        // If there's a course then check for instructor
+        if(!StringUtils.isEmpty(theCourseId)) {
+            // If no instructor then it is an invalid request
+            // throw an exception for this scenario
+            if(StringUtils.isEmpty(theInstructorId)) throw new Exception("Invalid request. No action available");
+            else {
+                // fetch that course with instructor no need to check for instructor
+                courseDto = courseDao.getCourseByIdWithInstructor(baseDto.decrypt(theCourseId, courseSalt));
+                courseDto.setEncId(baseDto.encrypt(String.valueOf(courseDto.getId()), courseSalt));
+                courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(courseDto.getInstructor_id()), instructorSalt));
+            }
+        } else {
+            // If there's no course and an instructor then fetch that
             if(!StringUtils.isEmpty(theInstructorId)) {
-                // If there's an instructor then set that Instructor in the course
-                int instructorId = Integer.parseInt(theInstructorId);
-                course.setInstructor(instructorDao.getById(instructorId));
-            } else {
-                // If there's no parent then the instructor will also ne a new object
-                course.setInstructor(new Instructor());
+                Instructor instructor = instructorDao.getById(baseDto.decrypt(theInstructorId, instructorSalt));
+                courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(instructor.getId()), instructorSalt));
+                courseDto.setEmail(instructor.getEmail());
             }
         }
 
-        return course;
+        return courseDto;
     }
 
     @Override

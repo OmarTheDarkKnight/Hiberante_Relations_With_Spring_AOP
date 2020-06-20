@@ -8,6 +8,6 @@ import java.util.List;
 public interface CourseService {
     public void save(Course newCourse);
     public List<CourseDto> getAllCourses();
-    public Course getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception;
+    public CourseDto getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception;
     public void delete(String theId);
 }
