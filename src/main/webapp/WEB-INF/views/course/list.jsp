@@ -44,13 +44,13 @@
             <c:forEach var="course" items="${courses}">
                 <tr>
                     <td>${course.title}</td>
-                    <td>${course.instructor.firstName} ${course.instructor.lastName}</td>
-                    <td>${course.instructor.email}</td>
+                    <td>${course.name}</td>
+                    <td>${course.email}</td>
                     <td>${course.rating}</td>
                     <td>
-                        <a href="${updateLink}?target=${course.id}&parent=${course.instructor.id}">Update</a>
+                        <a href="${updateLink}?target=${course.encId}&parent=${course.encInstructor_id}">Update</a>
                         |
-                        <a onclick="deleteSubmit(${course.id})"
+                        <a onclick="deleteSubmit(${course.encId})"
                            href="javascript:void(0)">Delete</a>
                     </td>
                 </tr>
