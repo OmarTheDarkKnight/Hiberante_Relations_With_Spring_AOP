@@ -72,5 +72,21 @@ public class CourseController {
         courseService.save(theCourse);
         return "redirect:/course/all";
     }
+
+    @PostMapping("/delete")
+    public String deleteCourse(@RequestParam("theId") String theId, RedirectAttributes redirectAttr) {
+        Map<String, String> messages = new HashMap<>();
+        try{
+            courseService.delete(theId);
+        } catch (Exception exception) {
+            messages.put("error", exception.getMessage());
+            redirectAttr.addFlashAttribute("messages", messages);
+            return "redirect:/course/all";
+        }
+
+        messages.put("success", "Course deleted successfully");
+        redirectAttr.addFlashAttribute("messages", messages);
+        return "redirect:/course/all";
+    }
 }
 
