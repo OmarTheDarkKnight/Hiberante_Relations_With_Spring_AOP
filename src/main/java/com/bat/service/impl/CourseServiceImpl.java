@@ -82,19 +82,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void delete(String theId) {
-        int courseId = Integer.parseInt(theId);
-        courseDao.delete(courseId);
-    }
-
-    private List<Course> setCourseRating(List<Course> courses) {
-        for(Course c: courses) {
-            c.setRating(reviewDao.getAvgRatingByCourse(c.getId()));
-        }
-        return courses;
-    }
-
-    private Course setCourseRating(Course course) {
-        course.setRating(reviewDao.getAvgRatingByCourse(course.getId()));
-        return course;
+        courseDao.delete(baseDto.decrypt(theId, courseSalt));
     }
 }
