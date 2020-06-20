@@ -21,16 +21,19 @@ public class CourseDao extends HelperDao {
         return em.find(Course.class, courseId);
     }
 
+    public CourseDto getCourseByIdWithInstructor(int courseId) {
+        return (CourseDto) hibernateQuery("SELECT c.id as id, c.title as title, c.instructor_id as instructor_id, " +
+                "i.email as email " +
+                "FROM course c JOIN instructor i ON i.id = c.instructor_id " +
+                "WHERE c.id=:courseId", CourseDto.class)
+                .setParameter("courseId", courseId)
+                .getSingleResult();
+    }
+
     public List<CourseDto> getAll() {
         return hibernateQuery("SELECT c.id as id, c.title as title, c.instructor_id as instructor_id," +
                 " concat(i.first_name, ' ', i.last_name) as name, i.email as email" +
                 " FROM course c JOIN instructor i ON i.id = c.instructor_id", CourseDto.class)
-                .list();
-    }
-
-    public List<Course> getByTitle(String courseTitle) {
-        return hibernateQuery("SELECT * FROM course WHERE title LIKE %:title%", Course.class)
-                .setParameter("title", courseTitle)
                 .list();
     }
 
