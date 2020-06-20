@@ -50,7 +50,7 @@
                     <td>
                         <a href="${updateLink}?target=${course.encId}&parent=${course.encInstructor_id}">Update</a>
                         |
-                        <a onclick="deleteSubmit(${course.encId})"
+                        <a onclick="deleteSubmit('${course.encId}')"
                            href="javascript:void(0)">Delete</a>
                     </td>
                 </tr>
