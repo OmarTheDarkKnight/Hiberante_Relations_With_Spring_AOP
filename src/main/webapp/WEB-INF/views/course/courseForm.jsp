@@ -15,8 +15,8 @@
 <div>
     <%--@elvariable id="course" type="java"--%>
     <form:form action="saveCourse" method="post" modelAttribute="course">
-        <form:hidden path="id" />
-        <form:hidden path="instructor.id" />
+        <form:hidden path="encId" />
+        <form:hidden path="encInstructor_id" />
         <div>
             <form:label path="title" cssErrorClass="error">Course title : </form:label>
             <form:input path="title" />
@@ -25,13 +25,13 @@
 
         <div>
             <c:choose>
-                <c:when test="${empty course.instructor.email}">
-                    <form:label path="instructor.email" cssErrorClass="error">Instructor's Email : </form:label>
-                    <form:input path="instructor.email" />
-                    <form:errors path="instructor.email" cssClass="error"/>
+                <c:when test="${empty email}">
+                    <form:label path="email" cssErrorClass="error">Instructor's Email : </form:label>
+                    <form:input path="email" />
+                    <form:errors path="email" cssClass="error"/>
                 </c:when>
                 <c:otherwise>
-                    Instructor's Email : ${course.instructor.email}
+                    Instructor's Email : ${email}
                 </c:otherwise>
             </c:choose>
         </div>
