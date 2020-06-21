@@ -1,7 +1,7 @@
 package com.bat.controller;
 
 import com.bat.alfred.Helper;
-import com.bat.model.Course;
+import com.bat.dto.CourseDto;
 import com.bat.service.CourseService;
 import com.bat.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,12 +64,25 @@ public class CourseController {
     }
 
     @PostMapping("/saveCourse")
-    public String saveCourse(@Valid @ModelAttribute("course") Course theCourse,
-                             BindingResult bindingResult) {
+    public String saveCourse(
+            @Valid @ModelAttribute("course") CourseDto theCourseDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttr) {
+
         if(bindingResult.hasErrors()) {
             return alfred.buildViewName(folderName, "courseForm");
         }
-        courseService.save(theCourse);
+        Map<String, String> messages = new HashMap<>();
+        try{
+            if(!courseService.save(theCourseDto))
+                throw new Exception();
+        } catch (Exception exception) {
+            messages.put("error", "Oops...something went wrong. Could not save the course.");
+            redirectAttr.addFlashAttribute("messages", messages);
+        }
+
+        messages.put("success", "Course added successfully");
+        redirectAttr.addFlashAttribute("messages", messages);
         return "redirect:/course/all";
     }
 
@@ -79,7 +92,7 @@ public class CourseController {
         try{
             courseService.delete(theId);
         } catch (Exception exception) {
-            messages.put("error", exception.getMessage());
+            messages.put("error", "Oops...something went wrong. Could not delete resource.");
             redirectAttr.addFlashAttribute("messages", messages);
             return "redirect:/course/all";
         }
