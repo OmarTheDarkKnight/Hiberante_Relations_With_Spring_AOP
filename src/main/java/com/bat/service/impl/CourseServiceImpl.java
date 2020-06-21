@@ -1,15 +1,11 @@
 package com.bat.service.impl;
 
-import com.bat.dao.CourseDao;
-import com.bat.dao.InstructorDao;
-import com.bat.dao.ReviewDao;
-import com.bat.dto.BaseDto;
 import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
+import com.bat.service.BaseService;
 import com.bat.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,22 +14,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CourseServiceImpl implements CourseService {
-    @Autowired
-    private CourseDao courseDao;
-
-    @Autowired
-    private ReviewDao reviewDao;
-
-    @Autowired
-    private BaseDto baseDto;
-
-    @Autowired
-    private InstructorDao instructorDao;
-
-    private String courseSalt = "course";
-    private String instructorSalt = "instructor";
-
+public class CourseServiceImpl extends BaseService implements CourseService {
     @Override
     public Boolean save(CourseDto courseDto) {
         try{
@@ -49,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
                 courseDao.insert(newCourse);
             } else {
                 //update
-                Course course = courseDao.getById(baseDto.decrypt(courseDto.getEncId(), courseSalt));
+                Course course = courseDao.getById(decrypt(courseDto.getEncId(), courseSalt));
                 course.setTitle(courseDto.getTitle());
                 courseDao.update(course);
             }
@@ -64,10 +45,9 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseDto> getAllCourses() {
         List<CourseDto> courseDtoList = courseDao.getAll();
         courseDtoList.forEach(courseDto -> {
-            int courseId = courseDto.getId();
-            courseDto.setEncId(baseDto.encrypt(String.valueOf(courseId), courseSalt));
-            courseDto.setRating(reviewDao.getAvgRatingByCourse(courseId));
-            courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(courseDto.getInstructor_id()), instructorSalt));
+            courseDto.setEncId(encrypt(courseDto.getId(), courseSalt));
+            courseDto.setRating(reviewDao.getAvgRatingByCourse(courseDto.getId()));
+            courseDto.setEncInstructor_id(encrypt(courseDto.getInstructor_id(), instructorSalt));
         });
         return courseDtoList;
     }
@@ -75,22 +55,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseDto getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception {
         CourseDto courseDto = new CourseDto();
-        // If there's a course then check for instructor
-        if(!StringUtils.isEmpty(theCourseId)) {
+        if(!StringUtils.isEmpty(theCourseId)) { // If there's a course then check for instructor
             // If no instructor then it is an invalid request
-            // throw an exception for this scenario
-            if(StringUtils.isEmpty(theInstructorId)) throw new Exception("Invalid request. No action available");
+            if(StringUtils.isEmpty(theInstructorId)) throw new Exception("Invalid request. No action available"); // throw an exception for this scenario
             else {
-                // fetch that course with instructor no need to check for instructor
-                courseDto = courseDao.getCourseByIdWithInstructor(baseDto.decrypt(theCourseId, courseSalt));
-                courseDto.setEncId(baseDto.encrypt(String.valueOf(courseDto.getId()), courseSalt));
-                courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(courseDto.getInstructor_id()), instructorSalt));
+                courseDto = courseDao.getCourseByIdWithInstructor(decrypt(theCourseId, courseSalt)); // else fetch that course with instructor no need to check for instructor
+                courseDto.setEncId(encrypt(courseDto.getId(), courseSalt));
+                courseDto.setEncInstructor_id(encrypt(courseDto.getInstructor_id(), instructorSalt));
             }
         } else {
-            // If there's no course and an instructor then fetch that
-            if(!StringUtils.isEmpty(theInstructorId)) {
-                Instructor instructor = instructorDao.getById(baseDto.decrypt(theInstructorId, instructorSalt));
-                courseDto.setEncInstructor_id(baseDto.encrypt(String.valueOf(instructor.getId()), instructorSalt));
+            if(!StringUtils.isEmpty(theInstructorId)) { // If there's no course and an instructor then fetch that
+                Instructor instructor = instructorDao.getById(decrypt(theInstructorId, instructorSalt));
+                courseDto.setEncInstructor_id(encrypt(instructor.getId(), instructorSalt));
                 courseDto.setEmail(instructor.getEmail());
             }
         }
@@ -100,6 +76,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void delete(String theId) {
-        courseDao.delete(baseDto.decrypt(theId, courseSalt));
+        courseDao.delete(decrypt(theId, courseSalt));
     }
 }
