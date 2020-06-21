@@ -42,9 +42,9 @@ public class Instructor {
 	
 	public Instructor() {}
 
-	public Instructor(String fristName, String lastName, String email) {
+	public Instructor(String firstName, String lastName, String email) {
 		super();
-		this.firstName = fristName;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 	}
