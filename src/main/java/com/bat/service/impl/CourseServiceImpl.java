@@ -5,6 +5,7 @@ import com.bat.dao.InstructorDao;
 import com.bat.dao.ReviewDao;
 import com.bat.dto.BaseDto;
 import com.bat.dto.CourseDto;
+import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.service.CourseService;
@@ -31,15 +32,32 @@ public class CourseServiceImpl implements CourseService {
     private InstructorDao instructorDao;
 
     private String courseSalt = "course";
-    private String instructorSalt = "parent";
+    private String instructorSalt = "instructor";
 
     @Override
-    public void save(Course newCourse) {
-//        if(newCourse.getInstructor().getEmail() != null) {
-//            Instructor instructor = (Instructor) instructorService.getByEmail(newCourse.getInstructor().getEmail()).get(0);
-//            newCourse.setInstructor(instructor);
-//        }
-//        courseDao.save(newCourse);
+    public Boolean save(CourseDto courseDto) {
+        try{
+            if(StringUtils.isEmpty(courseDto.getEncId())) {
+                //insert
+                InstructorWithDetailsDto instructorDto = instructorDao.getByEmail(courseDto.getEmail());
+                Instructor instructor =
+                        new Instructor(instructorDto.getFirst_name(), instructorDto.getLast_name(), instructorDto.getEmail());
+                instructor.setId(instructorDto.getId());
+
+                Course newCourse = new Course(courseDto.getTitle());
+                newCourse.setInstructor(instructor);
+                courseDao.insert(newCourse);
+            } else {
+                //update
+                Course course = courseDao.getById(baseDto.decrypt(courseDto.getEncId(), courseSalt));
+                course.setTitle(courseDto.getTitle());
+                courseDao.update(course);
+            }
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
