@@ -1,11 +1,10 @@
-package com.bat.service.impl;
+package com.bat.service;
 
 import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
-import com.bat.service.BaseService;
-import com.bat.service.CourseService;
+import com.bat.service.interfaces.CourseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;

@@ -1,8 +1,6 @@
-package com.bat.service;
+package com.bat.service.interfaces;
 
 import com.bat.model.Review;
-
-import java.util.List;
 
 public interface ReviewService {
     public void save(Review newReview);

@@ -2,8 +2,8 @@ package com.bat.controller;
 
 import com.bat.alfred.Helper;
 import com.bat.dto.CourseDto;
-import com.bat.service.CourseService;
-import com.bat.service.InstructorService;
+import com.bat.service.interfaces.CourseService;
+import com.bat.service.interfaces.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;

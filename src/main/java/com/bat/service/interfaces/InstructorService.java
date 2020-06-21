@@ -1,4 +1,4 @@
-package com.bat.service;
+package com.bat.service.interfaces;
 
 import java.util.List;
 

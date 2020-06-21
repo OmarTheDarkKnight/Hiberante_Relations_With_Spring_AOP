@@ -10,7 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.bat.alfred.Helper;
-import com.bat.service.InstructorService;
+import com.bat.service.interfaces.InstructorService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;

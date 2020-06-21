@@ -1,4 +1,4 @@
-package com.bat.service.impl;
+package com.bat.service;
 
 import java.util.List;
 
@@ -6,11 +6,10 @@ import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithCourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.InstructorDetails;
-import com.bat.service.BaseService;
 import org.springframework.stereotype.Service;
 
 import com.bat.model.Instructor;
-import com.bat.service.InstructorService;
+import com.bat.service.interfaces.InstructorService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
