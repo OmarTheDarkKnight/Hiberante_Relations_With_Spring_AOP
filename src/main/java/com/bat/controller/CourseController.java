@@ -24,9 +24,6 @@ public class CourseController {
     private CourseService courseService;
 
     @Autowired
-    private InstructorService instructorService;
-
-    @Autowired
     private Helper alfred;
 
     private String folderName = "course";
