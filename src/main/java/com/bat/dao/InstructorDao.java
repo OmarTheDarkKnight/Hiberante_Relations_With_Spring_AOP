@@ -33,10 +33,10 @@ public class InstructorDao extends HelperDao {
 //				.list();
 //	}
 
-	public Instructor getByEmail(String email) {
-		return (Instructor) hibernateQuery("SELECT * FROM instructor WHERE email =:email", Instructor.class)
+	public InstructorWithDetailsDto getByEmail(String email) {
+		return (InstructorWithDetailsDto) hibernateQuery("SELECT id, first_name, last_name, email FROM instructor WHERE email =:email", InstructorWithDetailsDto.class)
 				.setParameter("email", email)
-				.uniqueResult();
+				.getSingleResult();
 	}
 
 //	public List<Instructor> getByName(String name) {
