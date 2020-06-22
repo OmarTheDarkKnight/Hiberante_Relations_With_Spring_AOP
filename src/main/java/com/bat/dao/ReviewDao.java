@@ -1,5 +1,6 @@
 package com.bat.dao;
 
+import com.bat.dto.ReviewDto;
 import com.bat.model.Review;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +20,8 @@ public class ReviewDao extends HelperDao {
         return em.find(Review.class, reviewId);
     }
 
-    public List<Review> getByCourse(int  courseId) {
-        return hibernateQuery("SELECT * FROM review WHERE course_id=:courseId", Review.class)
+    public List<ReviewDto> getByCourse(int  courseId) {
+        return hibernateQuery("SELECT id, rating, comment FROM review WHERE course_id=:courseId", ReviewDto.class)
                 .setParameter("courseId", courseId)
                 .list();
     }
