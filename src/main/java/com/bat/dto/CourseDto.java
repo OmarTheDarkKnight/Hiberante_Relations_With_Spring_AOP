@@ -1,6 +1,7 @@
 package com.bat.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CourseDto extends BaseDto implements Serializable {
     private int id;
@@ -11,6 +12,7 @@ public class CourseDto extends BaseDto implements Serializable {
     private String encInstructor_id;
     private String name;
     private String email;
+    private List<ReviewDto> reviewDtoList;
 
     public int getId() {
         return id;
@@ -74,5 +76,13 @@ public class CourseDto extends BaseDto implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<ReviewDto> getReviewDtoList() {
+        return reviewDtoList;
+    }
+
+    public void setReviewDtoList(List<ReviewDto> reviewDtoList) {
+        this.reviewDtoList = reviewDtoList;
     }
 }
