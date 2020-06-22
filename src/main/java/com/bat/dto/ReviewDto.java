@@ -3,6 +3,8 @@ package com.bat.dto;
 import java.io.Serializable;
 
 public class ReviewDto extends BaseDto implements Serializable {
+    private int id;
+    private String encId;
     private float rating;
     private String comment;
 
@@ -11,6 +13,22 @@ public class ReviewDto extends BaseDto implements Serializable {
     public ReviewDto(float rating, String comment) {
         this.rating = rating;
         this.comment = comment;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEncId() {
+        return encId;
+    }
+
+    public void setEncId(String encId) {
+        this.encId = encId;
     }
 
     public float getRating() {
