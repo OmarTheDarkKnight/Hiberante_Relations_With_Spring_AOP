@@ -73,7 +73,7 @@
 </body>
 <script>
     function deleteSubmit(theID) {
-        let confirmation = confirm('Are you sure you want to delete this value?');
+        let confirmation = confirm('Are you sure you want to delete this course?');
         if(confirmation) {
             let form = document.getElementById("courseDeleteForm");
             form.elements["theId"].value = theID;
