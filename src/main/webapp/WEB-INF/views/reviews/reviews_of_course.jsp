@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/includes.jsp" %>
 <html>
 <head>
-    <title>Reviews</title>
+    <title>${course.title}'s reviews</title>
 </head>
 <body>
 <style>
@@ -15,7 +15,7 @@
     }
 </style>
 
-<h2>Reviews</h2>
+<h2>Reviews of ${course.title}</h2>
 
 <p>
     <c:forEach var="message" items="${messages}">
@@ -25,6 +25,12 @@
 
 <!-- Create course update link -->
 <c:url var="updateLink" value="/reviews/review-form" />
+
+<div>
+    <p>Course Taken by : ${course.name} </p>
+    <p>email : ${course.email} </p>
+    <p>Course Rating : ${course.rating}</p>
+</div>
 
 <div class="button">
     <a href="${updateLink}">
@@ -39,7 +45,7 @@
             <th>Comment</th>
             <th>Action</th>
         </tr>
-        <c:forEach var="review" items="${reviews}">
+        <c:forEach var="review" items="${course.reviewDtoList}">
             <tr>
                 <td>${review.rating}</td>
                 <td>${review.comment}</td>
