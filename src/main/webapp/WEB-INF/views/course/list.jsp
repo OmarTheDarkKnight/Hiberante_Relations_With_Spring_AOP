@@ -43,11 +43,16 @@
             </tr>
             <c:forEach var="course" items="${courses}">
                 <tr>
+                    <!-- Create review link for a specific course -->
+                    <c:url var="reviewLink" value="/reviews/${course.encId}"/>
+
                     <td>${course.title}</td>
                     <td>${course.name}</td>
                     <td>${course.email}</td>
                     <td>${course.rating}</td>
                     <td>
+                        <a href="${reviewLink}">See Reviews</a>
+                        |
                         <a href="${updateLink}?target=${course.encId}&parent=${course.encInstructor_id}">Update</a>
                         |
                         <a onclick="deleteSubmit('${course.encId}')"
