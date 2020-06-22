@@ -24,7 +24,7 @@ public class ReviewController {
 
     private String folderName = "reviews";
 
-    @GetMapping("/c/{courseId}")
+    @GetMapping("/{courseId}")
     public String showReviewsOfACourse(@PathVariable("courseId") String courseId, Model model, RedirectAttributes redirectAttr) {
         try {
             model.addAttribute("course", reviewService.getReviewsOfACourse(courseId));
