@@ -21,6 +21,7 @@ public class BaseService {
 
     protected String courseSalt = "course";
     protected String instructorSalt = "instructor";
+    protected String reviewWSalt = "review";
 
     public String encrypt(int intToEnc, String salt) {
         return baseDto.encrypt(String.valueOf(intToEnc), salt);
