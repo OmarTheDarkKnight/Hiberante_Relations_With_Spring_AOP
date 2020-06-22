@@ -14,6 +14,14 @@ public class CourseDto extends BaseDto implements Serializable {
     private String email;
     private List<ReviewDto> reviewDtoList;
 
+    public CourseDto() {};
+
+    public CourseDto(String encId, String title, float rating) {
+        this.encId = encId;
+        this.title = title;
+        this.rating = rating;
+    }
+
     public int getId() {
         return id;
     }
