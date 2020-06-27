@@ -52,7 +52,7 @@
                 <td>
                     <a href="${updateLink}?parent=${course.endId}&target=${review.encId}">Update</a>
                     |
-                    <a onclick="deleteSubmit('${review.encId}')"
+                    <a onclick="deleteSubmit('${review.encId}', '${course.endId}')"
                        href="javascript:void(0)">Delete</a>
                 </td>
             </tr>
@@ -62,6 +62,7 @@
 
 <form:form action="delete" method="post" id="reviewDeleteForm">
     <input type="hidden" name="theId" value="" />
+    <input type="hidden" name="theParentId" value="" />
 </form:form>
 
 <p>
@@ -69,11 +70,12 @@
 </p>
 </body>
 <script>
-    function deleteSubmit(theID) {
+    function deleteSubmit(theID, PID) {
         let confirmation = confirm('Are you sure you want to delete this review?');
         if(confirmation) {
             let form = document.getElementById("reviewDeleteForm");
             form.elements["theId"].value = theID;
+            form.elements["thePId"].value = PID;
             form.submit();
         }
     }
