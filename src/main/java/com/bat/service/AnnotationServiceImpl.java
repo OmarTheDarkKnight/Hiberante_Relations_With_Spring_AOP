@@ -15,6 +15,6 @@ public class AnnotationServiceImpl implements AnnotationService {
 
     @Override
     public boolean exists(String table, String column, String value) {
-        return false;
+        return annotationDao.occurrenceOfAValue(table, column, value) == 1;
     }
 }
