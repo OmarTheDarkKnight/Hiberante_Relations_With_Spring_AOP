@@ -50,7 +50,7 @@
                 <td>${review.rating}</td>
                 <td>${review.comment}</td>
                 <td>
-                    <a href="${updateLink}?target=${review.encId}">Update</a>
+                    <a href="${updateLink}?parent=${course.endId}&target=${review.encId}">Update</a>
                     |
                     <a onclick="deleteSubmit('${review.encId}')"
                        href="javascript:void(0)">Delete</a>
