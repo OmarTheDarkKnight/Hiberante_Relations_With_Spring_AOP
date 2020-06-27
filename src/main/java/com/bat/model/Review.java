@@ -16,7 +16,7 @@ public class Review {
 	@Column(name="rating")
 	private double rating;
 
-	@ManyToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="course_id")
 	private Course course;
 	
