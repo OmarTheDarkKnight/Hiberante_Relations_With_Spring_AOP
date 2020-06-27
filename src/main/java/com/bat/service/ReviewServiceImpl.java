@@ -21,6 +21,7 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
     @Override
     public CourseDto getReviewsOfACourse(String courseId) {
         CourseDto courseDto = courseDao.getCourseByIdWithInstructor(decrypt(courseId, courseSalt));
+        courseDto.setEncId(encrypt(courseDto.getId(), courseSalt));
         courseDto.setRating(reviewDao.getAvgRatingByCourse(courseDto.getId()));
 
         List<ReviewDto> reviewDtoList = reviewDao.getByCourse(courseDto.getId());
