@@ -1,13 +1,17 @@
 package com.bat.controller;
 
 import com.bat.alfred.Helper;
+import com.bat.dto.ReviewDto;
 import com.bat.service.interfaces.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +52,27 @@ public class ReviewController {
             return "redirect:/reviews/" + theParentId;
         }
         return alfred.buildViewName(folderName, "review_form");
+    }
+
+    @PostMapping("/saveReview")
+    public String saveReview(@Valid @ModelAttribute("review") ReviewDto reviewDto,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttr) {
+        Map<String, String> messages = new HashMap<>();
+        if(!StringUtils.isEmpty(reviewDto.getEncCourse_id())) {
+            try {
+                if(bindingResult.hasErrors()) return alfred.buildViewName(folderName, "review_form");
+                if(!reviewService.save(reviewDto)) throw new Exception();
+                messages.put("success", "Review added successfully");
+            } catch (Exception exception) {
+                messages.put("error", "Could not save review");
+            }
+            redirectAttr.addFlashAttribute("messages", messages);
+            return "redirect:/reviews/" + reviewDto.getEncCourse_id();
+        }
+        messages.put("error", "Invalid Request");
+        redirectAttr.addFlashAttribute("messages", messages);
+        return "redirect:/course/all";
     }
 
     @PostMapping("/delete")
