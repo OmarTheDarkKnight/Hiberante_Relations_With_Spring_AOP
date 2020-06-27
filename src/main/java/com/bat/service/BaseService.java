@@ -6,7 +6,7 @@ import com.bat.dao.ReviewDao;
 import com.bat.dto.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class BaseService {
+public abstract class BaseService {
     @Autowired
     protected CourseDao courseDao;
 
@@ -23,11 +23,11 @@ public class BaseService {
     protected String instructorSalt = "instructor";
     protected String reviewWSalt = "review";
 
-    public String encrypt(int intToEnc, String salt) {
+    public final String encrypt(int intToEnc, String salt) {
         return baseDto.encrypt(String.valueOf(intToEnc), salt);
     }
 
-    public int decrypt(String strToDec, String salt) {
+    public final int decrypt(String strToDec, String salt) {
         return baseDto.decrypt(strToDec, salt);
     }
 }
