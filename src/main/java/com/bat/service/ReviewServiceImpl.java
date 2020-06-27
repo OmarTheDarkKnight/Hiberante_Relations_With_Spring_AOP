@@ -33,13 +33,16 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
     }
 
     @Override
-    public ReviewDto getReview(String theEncReviewId) {
+    public ReviewDto getReview(String theEncReviewId, String theParentId) {
         ReviewDto reviewDto = new ReviewDto();
         if(!StringUtils.isEmpty(theEncReviewId)) {
             Review review = reviewDao.getById(decrypt(theEncReviewId, reviewWSalt));
             reviewDto.setEncId(encrypt(review.getId(), reviewWSalt));
+            reviewDto.setEncCourse_id(encrypt(review.getCourse().getId(), courseSalt));
             reviewDto.setComment(review.getComment());
-            reviewDto.setRating(review.getRating());
+            reviewDto.setRating((float)review.getRating());
+        } else {
+            reviewDto.setEncCourse_id(theParentId);
         }
         return reviewDto;
     }
