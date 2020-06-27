@@ -18,12 +18,6 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
     }
 
     @Override
-    public Review getReviewById(String theId) {
-        int reviewId = Integer.parseInt(theId);
-        return reviewDao.getById(reviewId);
-    }
-
-    @Override
     public CourseDto getReviewsOfACourse(String courseId) {
         CourseDto courseDto = courseDao.getCourseByIdWithInstructor(decrypt(courseId, courseSalt));
         courseDto.setRating(reviewDao.getAvgRatingByCourse(courseDto.getId()));
@@ -34,6 +28,11 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
         });
         courseDto.setReviewDtoList(reviewDtoList);
         return courseDto;
+    }
+
+    @Override
+    public ReviewDto getReview(String theEncReviewId) {
+        return null;
     }
 
     @Override
