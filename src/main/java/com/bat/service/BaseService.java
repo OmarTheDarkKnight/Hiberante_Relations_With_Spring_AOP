@@ -19,15 +19,17 @@ public abstract class BaseService {
     @Autowired
     protected BaseDto baseDto;
 
+    private String baseSalt = ":";
     protected String courseSalt = "course";
     protected String instructorSalt = "instructor";
     protected String reviewWSalt = "review";
 
     public final String encrypt(int intToEnc, String salt) {
-        return baseDto.encrypt(String.valueOf(intToEnc), salt);
+        return salt + baseSalt + intToEnc;
     }
 
     public final int decrypt(String strToDec, String salt) {
-        return baseDto.decrypt(strToDec, salt);
+        String[] splitToDec = strToDec.trim().split(salt + baseSalt);
+        return Integer.parseInt(splitToDec[1]);
     }
 }
