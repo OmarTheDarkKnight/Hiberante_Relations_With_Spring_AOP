@@ -1,16 +1,25 @@
 package com.bat.dto;
 
+import com.bat.annotations.Exists;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
 public class CourseDto extends BaseDto implements Serializable {
     private int id;
     private String encId;
+
+    @NotNull(message = "Title can not be null")
     private String title;
     private float rating;
     private int instructor_id;
     private String encInstructor_id;
     private String name;
+
+    @NotNull(message = "Email can not be null")
+    @Exists(table = "instructor", column = "email",
+            message = "No instructor found associated with this email")
     private String email;
     private List<ReviewDto> reviewDtoList;
 
