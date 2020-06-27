@@ -66,19 +66,17 @@ public class CourseController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttr) {
 
-        if(bindingResult.hasErrors()) {
-            return alfred.buildViewName(folderName, "courseForm");
-        }
         Map<String, String> messages = new HashMap<>();
         try{
+            if(bindingResult.hasErrors()) {
+                return alfred.buildViewName(folderName, "courseForm");
+            }
             if(!courseService.save(theCourseDto))
                 throw new Exception();
+            messages.put("success", "Course added successfully");
         } catch (Exception exception) {
             messages.put("error", "Oops...something went wrong. Could not save the course.");
-            redirectAttr.addFlashAttribute("messages", messages);
         }
-
-        messages.put("success", "Course added successfully");
         redirectAttr.addFlashAttribute("messages", messages);
         return "redirect:/course/all";
     }

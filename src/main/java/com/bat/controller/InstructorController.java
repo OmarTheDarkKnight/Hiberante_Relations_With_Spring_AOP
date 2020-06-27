@@ -76,17 +76,17 @@ public class InstructorController {
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttr) {
 
+		Map<String, String> messages = new HashMap<>();
 		try {
 			if(bindingResult.hasErrors()) {
 				return helper.buildViewName(folderName, "instructorForm");
 			}
 			instructorService.save(instructorWithDetailsDto);
+			messages.put("success", "Instructor added successfully");
 		} catch (Exception exception) {
-			Map<String, String> messages = new HashMap<>();
 			messages.put("error", "Could not save instructor");
-			redirectAttr.addFlashAttribute("messages", messages);
 		}
-
+		redirectAttr.addFlashAttribute("messages", messages);
 		return "redirect:/instructor/all";
 	}
 
