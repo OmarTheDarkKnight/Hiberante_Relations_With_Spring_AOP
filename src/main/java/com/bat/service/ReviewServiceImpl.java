@@ -46,7 +46,6 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
 
     @Override
     public void delete(String theId) {
-        int reviewId = Integer.parseInt(theId);
-        reviewDao.delete(reviewId);
+        reviewDao.delete(decrypt(theId, reviewWSalt));
     }
 }
