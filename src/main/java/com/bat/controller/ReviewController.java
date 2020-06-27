@@ -35,12 +35,13 @@ public class ReviewController {
         return alfred.buildViewName(folderName, "reviews_of_course");
     }
 
-    @GetMapping("/review-form")
-    public String getReview(@RequestParam(value = "parent") String theParentId,
+    @GetMapping("/review-form/{parent}")
+    public String getReview(@PathVariable(value = "parent") String theParentId,
                             @RequestParam(value = "target", required = false) String theId,
                             Model model, RedirectAttributes redirectAttr) {
         try {
             model.addAttribute("review", reviewService.getReview(theId));
+            model.addAttribute("pid", theParentId);
         } catch (Exception exception) {
             Map<String, String> messages = new HashMap<String, String>();
             messages.put("error", "No review found");
