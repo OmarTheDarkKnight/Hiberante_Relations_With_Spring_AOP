@@ -7,6 +7,6 @@ import com.bat.model.Review;
 public interface ReviewService {
     void save(Review newReview);
     CourseDto getReviewsOfACourse(String courseId);
-    ReviewDto getReview(String theEncReviewId);
+    ReviewDto getReview(String theEncReviewId, String theParentId);
     void delete(String theId);
 }
