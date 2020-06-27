@@ -58,11 +58,10 @@ public class ReviewController {
         try{
             reviewService.delete(theId);
             messages.put("success", "Review deleted successfully");
-            redirectAttr.addFlashAttribute("messages", messages);
         } catch (Exception exception) {
             messages.put("error", "Oops...something went wrong. Could not delete resource.");
-            redirectAttr.addFlashAttribute("messages", messages);
         }
+        redirectAttr.addFlashAttribute("messages", messages);
         return "redirect:/reviews/" + theParentId;
     }
 }
