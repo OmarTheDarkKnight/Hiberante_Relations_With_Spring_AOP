@@ -1,11 +1,18 @@
 package com.bat.dto;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class ReviewDto extends BaseDto implements Serializable {
     private int id;
     private String encId;
     private String encCourse_id;
+
+    @NotNull(message = "Rating can not be null")
+    @DecimalMin(message = "Invalid rating", value = "0.0")
+    @DecimalMax(message = "Invalid rating", value = "5.0")
     private float rating;
 
     private String comment;
