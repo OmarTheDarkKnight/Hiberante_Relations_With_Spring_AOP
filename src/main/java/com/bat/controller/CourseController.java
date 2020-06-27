@@ -1,15 +1,9 @@
 package com.bat.controller;
 
-import com.bat.alfred.Helper;
 import com.bat.dto.CourseDto;
-import com.bat.service.interfaces.CourseService;
-import com.bat.service.interfaces.InstructorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,30 +13,12 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/course")
-public class CourseController {
-    @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private Helper alfred;
-
-    private String folderName = "course";
-
-    @InitBinder
-    public void initBinder(WebDataBinder webDataBinder) {
-        // Spring class for string trim
-        // "true" in the constructor means it will trim the spaces down to null
-        // if there's only white spaces in the data filed
-        StringTrimmerEditor stringTrimmer = new StringTrimmerEditor(true);
-
-        // registering it as a custom editor that will work on every String class as specified
-        webDataBinder.registerCustomEditor(String.class, stringTrimmer);
-    }
+public class CourseController extends BaseController {
 
     @GetMapping("/all")
     public String courseList(Model model) {
         model.addAttribute("courses", courseService.getAllCourses());
-        return alfred.buildViewName(folderName, "list");
+        return alfred.buildViewName(courseFolderName, "list");
     }
 
     @GetMapping("/course-form")
@@ -57,7 +33,7 @@ public class CourseController {
             redirectAttr.addFlashAttribute("messages", messages);
             return "redirect:/course/all";
         }
-        return alfred.buildViewName(folderName, "courseForm");
+        return alfred.buildViewName(courseFolderName, "courseForm");
     }
 
     @PostMapping("/saveCourse")
@@ -69,7 +45,7 @@ public class CourseController {
         Map<String, String> messages = new HashMap<>();
         try{
             if(bindingResult.hasErrors()) {
-                return alfred.buildViewName(folderName, "courseForm");
+                return alfred.buildViewName(courseFolderName, "courseForm");
             }
             if(!courseService.save(theCourseDto))
                 throw new Exception();

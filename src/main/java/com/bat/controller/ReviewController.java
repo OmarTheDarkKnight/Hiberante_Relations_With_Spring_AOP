@@ -1,9 +1,6 @@
 package com.bat.controller;
 
-import com.bat.alfred.Helper;
 import com.bat.dto.ReviewDto;
-import com.bat.service.interfaces.ReviewService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,14 +14,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/reviews")
-public class ReviewController {
-    @Autowired
-    private Helper alfred;
-
-    @Autowired
-    private ReviewService reviewService;
-
-    private String folderName = "reviews";
+public class ReviewController extends BaseController {
 
     @GetMapping("/{courseId}")
     public String showReviewsOfACourse(@PathVariable("courseId") String courseId, Model model, RedirectAttributes redirectAttr) {
@@ -36,7 +26,7 @@ public class ReviewController {
             redirectAttr.addFlashAttribute("messages", messages);
             return "redirect:/course/all";
         }
-        return alfred.buildViewName(folderName, "reviews_of_course");
+        return alfred.buildViewName(reviewFolderName, "reviews_of_course");
     }
 
     @GetMapping("/review-form/{parent}")
@@ -51,7 +41,7 @@ public class ReviewController {
             redirectAttr.addFlashAttribute("messages", messages);
             return "redirect:/reviews/" + theParentId;
         }
-        return alfred.buildViewName(folderName, "review_form");
+        return alfred.buildViewName(reviewFolderName, "review_form");
     }
 
     @PostMapping("/saveReview")
@@ -61,7 +51,7 @@ public class ReviewController {
         Map<String, String> messages = new HashMap<>();
         if(!StringUtils.isEmpty(reviewDto.getEncCourse_id())) {
             try {
-                if(bindingResult.hasErrors()) return alfred.buildViewName(folderName, "review_form");
+                if(bindingResult.hasErrors()) return alfred.buildViewName(reviewFolderName, "review_form");
                 if(!reviewService.save(reviewDto)) throw new Exception();
                 messages.put("success", "Review added successfully");
             } catch (Exception exception) {
