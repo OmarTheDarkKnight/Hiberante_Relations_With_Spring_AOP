@@ -22,6 +22,6 @@ public class ExistsConstraintValidator implements ConstraintValidator<Exists, St
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return value != null && annotationService.exists(tableName, columnName, value);
+        return annotationService.exists(tableName, columnName, value);
     }
 }
