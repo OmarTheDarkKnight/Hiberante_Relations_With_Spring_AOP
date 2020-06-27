@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
@@ -35,5 +36,20 @@ public class ReviewController {
             return "redirect:/course/all";
         }
         return alfred.buildViewName(folderName, "reviews_of_course");
+    }
+
+    @GetMapping("/review-form")
+    public String getReview(@RequestParam(value = "parent") String theParentId,
+                            @RequestParam(value = "target", required = false) String theId,
+                            Model model, RedirectAttributes redirectAttr) {
+        try {
+            model.addAttribute("review", reviewService.getReview(theId));
+        } catch (Exception exception) {
+            Map<String, String> messages = new HashMap<String, String>();
+            messages.put("error", "No review found");
+            redirectAttr.addFlashAttribute("messages", messages);
+            return "redirect:/reviews/" + theParentId;
+        }
+        return alfred.buildViewName(folderName, "review_form");
     }
 }
