@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ReviewDto extends BaseDto implements Serializable {
     private int id;
     private String encId;
-    private float rating;
+    private double rating;
     private String comment;
 
     public ReviewDto() {}
@@ -31,11 +31,11 @@ public class ReviewDto extends BaseDto implements Serializable {
         this.encId = encId;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
