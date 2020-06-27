@@ -62,7 +62,7 @@
 
 <form:form action="delete" method="post" id="reviewDeleteForm">
     <input type="hidden" name="theId" value="" />
-    <input type="hidden" name="theParentId" value="" />
+    <input type="hidden" name="thePId" value="" />
 </form:form>
 
 <p>
