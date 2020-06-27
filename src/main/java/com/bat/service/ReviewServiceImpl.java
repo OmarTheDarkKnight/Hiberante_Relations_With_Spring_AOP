@@ -14,8 +14,25 @@ import java.util.List;
 @Transactional
 public class ReviewServiceImpl extends BaseService implements ReviewService {
     @Override
-    public void save(Review newReview) {
-//        reviewDao.save(newReview);
+    public Boolean save(ReviewDto reviewDto) {
+        try{
+            if(StringUtils.isEmpty(reviewDto.getEncId())) {
+                //insert
+                Review newReview = new Review(reviewDto.getComment(), reviewDto.getRating());
+                newReview.setCourse(courseDao.getById(decrypt(reviewDto.getEncCourse_id(), courseSalt)));
+                reviewDao.insert(newReview);
+            } else {
+                //update
+                Review review = reviewDao.getById(decrypt(reviewDto.getEncId(), reviewWSalt));
+                review.setComment(reviewDto.getComment());
+                review.setRating(reviewDto.getRating());
+                reviewDao.update(review);
+            }
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
