@@ -88,13 +88,10 @@ public class CourseController {
         Map<String, String> messages = new HashMap<>();
         try{
             courseService.delete(theId);
+            messages.put("success", "Course deleted successfully");
         } catch (Exception exception) {
             messages.put("error", "Oops...something went wrong. Could not delete resource.");
-            redirectAttr.addFlashAttribute("messages", messages);
-            return "redirect:/course/all";
         }
-
-        messages.put("success", "Course deleted successfully");
         redirectAttr.addFlashAttribute("messages", messages);
         return "redirect:/course/all";
     }

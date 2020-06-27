@@ -95,14 +95,11 @@ public class InstructorController {
         Map<String, String> messages = new HashMap<>();
         try{
             instructorService.delete(theId);
+			messages.put("success", "Instructor deleted successfully");
         } catch (Exception exception) {
             messages.put("error", "Could not delete resource");
-            redirectAttr.addFlashAttribute("messages", messages);
-            return "redirect:/instructor/all";
         }
-
-        messages.put("success", "Instructor deleted successfully");
-        redirectAttr.addFlashAttribute("messages", messages);
+		redirectAttr.addFlashAttribute("messages", messages);
 	    return "redirect:/instructor/all";
     }
 
