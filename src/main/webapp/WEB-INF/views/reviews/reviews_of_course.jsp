@@ -24,7 +24,7 @@
 </p>
 
 <!-- Create course update link -->
-<c:url var="updateLink" value="/reviews/review-form" />
+<c:url var="updateLink" value="/reviews/review-form/${course.encId}" />
 
 <div>
     <p>Course Taken by : ${course.name} </p>
@@ -50,9 +50,9 @@
                 <td>${review.rating}</td>
                 <td>${review.comment}</td>
                 <td>
-                    <a href="${updateLink}?parent=${course.endId}&target=${review.encId}">Update</a>
+                    <a href="${updateLink}?target=${review.encId}">Update</a>
                     |
-                    <a onclick="deleteSubmit('${review.encId}', '${course.endId}')"
+                    <a onclick="deleteSubmit('${review.encId}', '${course.encId}')"
                        href="javascript:void(0)">Delete</a>
                 </td>
             </tr>
