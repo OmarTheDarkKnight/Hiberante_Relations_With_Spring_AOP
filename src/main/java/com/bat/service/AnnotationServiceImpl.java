@@ -17,4 +17,9 @@ public class AnnotationServiceImpl implements AnnotationService {
     public boolean exists(String table, String column, String value) {
         return annotationDao.occurrenceOfAValue(table, column, value) == 1;
     }
+
+    @Override
+    public boolean unique(String table, String column, String value) {
+        return annotationDao.occurrenceOfAValue(table, column, value) == 0;
+    }
 }
