@@ -6,6 +6,7 @@ import com.bat.model.Review;
 import com.bat.service.interfaces.ReviewService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -32,7 +33,14 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
 
     @Override
     public ReviewDto getReview(String theEncReviewId) {
-        return null;
+        ReviewDto reviewDto = new ReviewDto();
+        if(!StringUtils.isEmpty(theEncReviewId)) {
+            Review review = reviewDao.getById(decrypt(theEncReviewId, reviewWSalt));
+            reviewDto.setEncId(encrypt(review.getId(), reviewWSalt));
+            reviewDto.setComment(review.getComment());
+            reviewDto.setRating(review.getRating());
+        }
+        return reviewDto;
     }
 
     @Override
