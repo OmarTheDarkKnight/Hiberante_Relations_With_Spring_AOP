@@ -40,8 +40,7 @@ public class ReviewController {
                             @RequestParam(value = "target", required = false) String theId,
                             Model model, RedirectAttributes redirectAttr) {
         try {
-            model.addAttribute("review", reviewService.getReview(theId));
-            model.addAttribute("pid", theParentId);
+            model.addAttribute("review", reviewService.getReview(theId, theParentId));
         } catch (Exception exception) {
             Map<String, String> messages = new HashMap<String, String>();
             messages.put("error", "No review found");
