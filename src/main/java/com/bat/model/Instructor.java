@@ -22,11 +22,7 @@ public class Instructor {
 	@Column(name="id")
 	private int id;
 
-	@Column(name="first_name")
-	private String firstName;
-
-	@Column(name="last_name")
-	private String lastName;
+	private Name name;
 
 	@Column(name="email")
 	private String email;
@@ -42,10 +38,9 @@ public class Instructor {
 	
 	public Instructor() {}
 
-	public Instructor(String firstName, String lastName, String email) {
+	public Instructor(Name name, String email) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.email = email;
 	}
 
@@ -57,20 +52,12 @@ public class Instructor {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public Name getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFirstName(Name name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -117,7 +104,7 @@ public class Instructor {
 
 	@Override
 	public String toString() {
-		return "Instructor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
+		return "Instructor [id=" + id + ", firstName=" + name.getFirstName() + ", lastName=" + name.getLastName()
 				+ ", email=" + email + ", instructorDetails=" + instructorDetails + ", courses=" + courses + "]";
 	}
 }
