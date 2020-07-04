@@ -25,6 +25,14 @@ public class StudentWithCourseDto extends BaseDto implements Serializable {
 
     private List<CourseDto> courses;
 
+    public StudentWithCourseDto(){}
+
+    public StudentWithCourseDto(String first_name, String last_name, String email) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }
