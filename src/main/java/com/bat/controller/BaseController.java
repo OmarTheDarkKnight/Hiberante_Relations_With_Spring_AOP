@@ -30,7 +30,7 @@ public abstract class BaseController {
     protected String instructorFolderName = "instructor";
     protected String courseFolderName = "course";
     protected String reviewFolderName = "reviews";
-    protected String studentFolderName = "reviews";
+    protected String studentFolderName = "student";
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
