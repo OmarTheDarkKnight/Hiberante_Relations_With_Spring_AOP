@@ -22,6 +22,7 @@ public class CourseDto extends BaseDto implements Serializable {
             message = "No instructor found associated with this email")
     private String email;
     private List<ReviewDto> reviewDtoList;
+    private List<StudentWithCourseDto> students;
 
     public CourseDto() {};
 
@@ -101,5 +102,13 @@ public class CourseDto extends BaseDto implements Serializable {
 
     public void setReviewDtoList(List<ReviewDto> reviewDtoList) {
         this.reviewDtoList = reviewDtoList;
+    }
+
+    public List<StudentWithCourseDto> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<StudentWithCourseDto> students) {
+        this.students = students;
     }
 }
