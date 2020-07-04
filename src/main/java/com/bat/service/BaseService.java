@@ -3,6 +3,7 @@ package com.bat.service;
 import com.bat.dao.CourseDao;
 import com.bat.dao.InstructorDao;
 import com.bat.dao.ReviewDao;
+import com.bat.dao.StudentDao;
 import com.bat.dto.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,12 +18,16 @@ public abstract class BaseService {
     protected InstructorDao instructorDao;
 
     @Autowired
+    protected StudentDao studentDao;
+
+    @Autowired
     protected BaseDto baseDto;
 
     private String baseSalt = ":";
     protected String courseSalt = "course";
     protected String instructorSalt = "instructor";
     protected String reviewWSalt = "review";
+    protected String studentSalt = "std";
 
     public final String encrypt(int intToEnc, String salt) {
         return salt + baseSalt + intToEnc;
