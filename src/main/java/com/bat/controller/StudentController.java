@@ -18,7 +18,7 @@ import java.util.Map;
 public class StudentController extends BaseController {
 
 	@GetMapping("/all")
-	public String getInstructorList(Model model, RedirectAttributes redirectAttr) {
+	public String getStudentList(Model model, RedirectAttributes redirectAttr) {
 		try{
 			List<StudentWithCourseDto> students = studentService.getAllStudents();
 			model.addAttribute("students", students);
@@ -31,7 +31,7 @@ public class StudentController extends BaseController {
 	}
 
 	@GetMapping("/student-form")
-	public String showInstructorForm(@RequestParam(value = "target", required = false) String theId,
+	public String showStudentForm(@RequestParam(value = "target", required = false) String theId,
 									 Model model, RedirectAttributes redirectAttr) {
 		try{
 			StudentWithCourseDto student = studentService.getStudentById(theId);
@@ -47,7 +47,7 @@ public class StudentController extends BaseController {
 	}
 
 	@PostMapping("/save-student")
-	public String saveInstructor(
+	public String saveStudent(
 			@Valid @ModelAttribute("student") StudentWithCourseDto studentWithCourseDto,
 			BindingResult bindingResult,
 			RedirectAttributes redirectAttr) {
@@ -71,7 +71,7 @@ public class StudentController extends BaseController {
 	}
 
 	@PostMapping("/delete")
-    public String deleteInstructor(@RequestParam("theId") String theId, RedirectAttributes redirectAttr) {
+    public String deleteStudent(@RequestParam("theId") String theId, RedirectAttributes redirectAttr) {
         Map<String, String> messages = new HashMap<>();
         try{
             studentService.delete(theId);
@@ -84,7 +84,7 @@ public class StudentController extends BaseController {
     }
 
     @GetMapping("/courses")
-    public String showInstructorCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
+    public String showStudentCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
 
 		try{
 			model.addAttribute("student", studentService.getCoursesOfStudent(theId));
@@ -92,7 +92,7 @@ public class StudentController extends BaseController {
 			Map<String, String> messages = new HashMap<>();
 			messages.put("error", "Oops...Could not fetch data. Please try again.");
 			redirectAttr.addFlashAttribute("messages", messages);
-			return "redirect:/instructor/all";
+			return "redirect:/student/all";
 		}
         return alfred.buildViewName(studentFolderName, "courses");
     }
