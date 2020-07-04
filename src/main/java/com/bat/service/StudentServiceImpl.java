@@ -1,5 +1,6 @@
 package com.bat.service;
 
+import com.bat.dto.CourseDto;
 import com.bat.dto.StudentWithCourseDto;
 import com.bat.model.Name;
 import com.bat.model.Student;
@@ -55,6 +56,26 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 			studentWithCourseDto.setLast_name(student.getName().getLastName());
 			studentWithCourseDto.setEmail(student.getEmail());
 		}
+		return studentWithCourseDto;
+	}
+
+	@Override
+	public StudentWithCourseDto getCoursesOfStudent(String studentId) {
+		Student student = studentDao.getById(decrypt(studentId, studentSalt));
+
+		// convert from model to dto
+		StudentWithCourseDto studentWithCourseDto = new StudentWithCourseDto(student.getName().getFirstName(), student.getName().getLastName(),
+				student.getEmail());
+		studentWithCourseDto.setEncId(encrypt(student.getId(), studentSalt));
+
+		// fetch course list and set them in studentWithCourseDto
+		List<CourseDto> courses = courseDao.getCoursesByStudent(student.getId());
+		courses.forEach(course -> {
+			course.setRating(reviewDao.getAvgRatingByCourse(course.getId()));
+			course.setEncId(encrypt(course.getId(), courseSalt));
+		});
+		studentWithCourseDto.setCourses(courses);
+
 		return studentWithCourseDto;
 	}
 

@@ -8,5 +8,6 @@ public interface StudentService {
 	Boolean save(StudentWithCourseDto newStudentWithCourseDto);
 	List<StudentWithCourseDto> getAllStudents();
 	StudentWithCourseDto getStudentById(String studentId);
+	StudentWithCourseDto getCoursesOfStudent(String studentId);
 	void delete(String theID);
 }
