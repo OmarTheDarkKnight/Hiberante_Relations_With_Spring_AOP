@@ -87,8 +87,7 @@ public class StudentController extends BaseController {
     public String showInstructorCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
 
 		try{
-			// TODO : Add method to fetch courses for a specific student and call it from controller
-//			model.addAttribute("instructor", studentService.getInstructorCourses(theId));
+			model.addAttribute("student", studentService.getCoursesOfStudent(theId));
 		} catch (Exception exception) {
 			Map<String, String> messages = new HashMap<>();
 			messages.put("error", "Oops...Could not fetch data. Please try again.");
