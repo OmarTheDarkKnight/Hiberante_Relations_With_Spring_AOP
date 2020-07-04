@@ -46,12 +46,17 @@
                     <!-- Create review link for a specific course -->
                     <c:url var="reviewLink" value="/reviews/${course.encId}"/>
 
+                    <!-- Create student link for a specific course -->
+                    <c:url var="studentLink" value="/course/students/${course.encId}"/>
+
                     <td>${course.title}</td>
                     <td>${course.name}</td>
                     <td>${course.email}</td>
                     <td>${course.rating}</td>
                     <td>
                         <a href="${reviewLink}">See Reviews</a>
+                        |
+                        <a href="${studentLink}">View Student</a>
                         |
                         <a href="${updateLink}?target=${course.encId}&parent=${course.encInstructor_id}">Update</a>
                         |
