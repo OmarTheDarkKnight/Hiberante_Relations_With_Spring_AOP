@@ -1,6 +1,7 @@
 package com.bat.service;
 
 import com.bat.dto.StudentWithCourseDto;
+import com.bat.model.Student;
 import com.bat.service.interfaces.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,19 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 			student.setEncId(encrypt(student.getId(), studentSalt));
 		});
 		return students;
+	}
+
+	@Override
+	public StudentWithCourseDto getStudentById(String studentId) {
+		StudentWithCourseDto studentWithCourseDto = new StudentWithCourseDto();
+		if(!StringUtils.isEmpty(studentId)) {
+			Student student = studentDao.getById(decrypt(studentId, studentSalt));
+			studentWithCourseDto.setEncId(encrypt(student.getId(), studentSalt));
+			studentWithCourseDto.setFirst_name(student.getName().getFirstName());
+			studentWithCourseDto.setLast_name(student.getName().getLastName());
+			studentWithCourseDto.setEmail(student.getEmail());
+		}
+		return studentWithCourseDto;
 	}
 
 	@Override
