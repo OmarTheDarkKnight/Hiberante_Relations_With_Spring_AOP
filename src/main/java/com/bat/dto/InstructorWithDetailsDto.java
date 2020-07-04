@@ -1,7 +1,6 @@
 package com.bat.dto;
 
 import com.bat.annotations.CustomEmail;
-import com.bat.annotations.Unique;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -24,8 +23,6 @@ public class InstructorWithDetailsDto extends BaseDto implements Serializable {
 
     @NotNull(message = "Email is required")
     @CustomEmail
-    @Unique(table = "instructor", column = "email",
-            message = "Email already taken")
     private String email;
 
     private int instructor_detail_id;

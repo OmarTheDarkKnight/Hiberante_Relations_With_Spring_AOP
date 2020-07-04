@@ -1,11 +1,13 @@
 package com.bat.controller;
 
 import com.bat.alfred.Helper;
+import com.bat.service.interfaces.AnnotationService;
 import com.bat.service.interfaces.CourseService;
 import com.bat.service.interfaces.InstructorService;
 import com.bat.service.interfaces.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -22,6 +24,9 @@ public abstract class BaseController {
     @Autowired
     protected ReviewService reviewService;
 
+    @Autowired
+    protected AnnotationService annotationService;
+
     protected String instructorFolderName = "instructor";
     protected String courseFolderName = "course";
     protected String reviewFolderName = "reviews";
@@ -35,5 +40,17 @@ public abstract class BaseController {
 
         // registering it as a custom editor that will work on every String class as specified
         webDataBinder.registerCustomEditor(String.class, stringTrimmer);
+    }
+
+    protected String checkExistsOrUnique(String id, String table, String column, String value) {
+        if(StringUtils.isEmpty(id)) {
+            return annotationService.unique(table, column, value) ?
+                    null :
+                    column.substring(0, 1).toUpperCase() + column.substring(1) + " already exists";
+        } else {
+            return annotationService.exists(table, column, value) ?
+                    null :
+                    column.substring(0, 1).toUpperCase() + column.substring(1) + " not found";
+        }
     }
 }
