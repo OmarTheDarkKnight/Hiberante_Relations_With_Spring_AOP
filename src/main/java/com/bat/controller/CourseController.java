@@ -69,5 +69,18 @@ public class CourseController extends BaseController {
         redirectAttr.addFlashAttribute("messages", messages);
         return "redirect:/course/all";
     }
+
+    @GetMapping("/students/{courseId}")
+    public String getStudentsOfACourse(@PathVariable("courseId") String theId, Model model, RedirectAttributes redirectAttr) {
+        try{
+            model.addAttribute("course", courseService.getStudentsOfCourse(theId));
+        } catch (Exception exception) {
+            Map<String, String> messages = new HashMap<>();
+            messages.put("error", "Oops...Could not fetch data. Please try again.");
+            redirectAttr.addFlashAttribute("messages", messages);
+            return "redirect:/course/all";
+        }
+        return alfred.buildViewName(courseFolderName, "students_of_a_course");
+    }
 }
 
