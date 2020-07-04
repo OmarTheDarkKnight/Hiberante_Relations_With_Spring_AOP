@@ -2,6 +2,7 @@ package com.bat.service;
 
 import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
+import com.bat.dto.StudentWithCourseDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
 import com.bat.model.Name;
@@ -75,6 +76,24 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         }
 
         return courseDto;
+    }
+
+    @Override
+    public CourseDto getStudentsOfCourse(String courseId) {
+        Course course = courseDao.getById(decrypt(courseId, courseSalt));
+
+        // model to dto conversion
+        CourseDto courseDto = new CourseDto(
+                encrypt(course.getId(), courseSalt),
+                course.getTitle(), 0
+//                reviewDao.getAvgRatingByCourse(course.getId())
+        );
+
+        // fetch the students
+        List<StudentWithCourseDto> students = studentDao.getStudentsByCourse(course.getId());
+        courseDto.setStudents(students);
+
+        return  courseDto;
     }
 
     @Override

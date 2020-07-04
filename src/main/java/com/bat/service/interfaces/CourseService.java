@@ -8,5 +8,6 @@ public interface CourseService {
     Boolean save(CourseDto newCourse);
     List<CourseDto> getAllCourses();
     CourseDto getCourseWithInstructor(String theCourseId, String theInstructorId) throws Exception;
+    CourseDto getStudentsOfCourse(String courseId);
     void delete(String theId);
 }
