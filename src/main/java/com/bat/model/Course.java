@@ -1,6 +1,7 @@
 package com.bat.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="course")
@@ -19,6 +20,9 @@ public class Course {
 	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="instructor_id")
 	private Instructor instructor;
+
+	@ManyToMany(mappedBy = "courses")
+	private List<Student> students;
 	
 	public Course() {}
 	
@@ -56,6 +60,14 @@ public class Course {
 
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	@Override

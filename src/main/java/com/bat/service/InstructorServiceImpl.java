@@ -6,6 +6,7 @@ import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithCourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.InstructorDetails;
+import com.bat.model.Name;
 import org.springframework.stereotype.Service;
 
 import com.bat.model.Instructor;
@@ -24,8 +25,9 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 		);
 
 		Instructor newInstructor = new Instructor(
-				newInstructorWithDetails.getFirst_name(),
-				newInstructorWithDetails.getLast_name(),
+				new Name(newInstructorWithDetails.getFirst_name(),
+						newInstructorWithDetails.getLast_name()
+				),
 				newInstructorWithDetails.getEmail()
 		);
 		newInstructor.setInstructorDetails(instructorDetails);
@@ -58,8 +60,8 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 					encrypt(instructor.getId(), // get the instructor id, convert to string and set it as first parameter for encrypt method
 					instructorSalt) // second parameter of the encrypt method
 			);
-			instructorWithDetailsDto.setFirst_name(instructor.getFirstName());
-			instructorWithDetailsDto.setLast_name(instructor.getLastName());
+			instructorWithDetailsDto.setFirst_name(instructor.getName().getFirstName());
+			instructorWithDetailsDto.setLast_name(instructor.getName().getLastName());
 			instructorWithDetailsDto.setEmail(instructor.getEmail());
 
 			instructorWithDetailsDto.setInstructor_detail_id(instructor.getInstructorDetails().getId());
@@ -76,8 +78,8 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 		if(!StringUtils.isEmpty(theInstructorId.trim())) {
 			Instructor instructor = instructorDao.getById(decrypt(theInstructorId, instructorSalt));
 			instructorWithCourseDto.setEncId(theInstructorId);
-			instructorWithCourseDto.setFirst_name(instructor.getFirstName());
-			instructorWithCourseDto.setLast_name(instructor.getLastName());
+			instructorWithCourseDto.setFirst_name(instructor.getName().getFirstName());
+			instructorWithCourseDto.setLast_name(instructor.getName().getLastName());
 			instructorWithCourseDto.setEmail(instructor.getEmail());
 
 			List<CourseDto> courseDtoList = courseDao.getByInstructor(instructor.getId());

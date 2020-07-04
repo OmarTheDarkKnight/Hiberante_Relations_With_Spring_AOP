@@ -1,8 +1,10 @@
 package com.bat.controller;
 
+import com.bat.annotations.Exists;
 import com.bat.dto.InstructorWithDetailsDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,11 +56,16 @@ public class InstructorController extends BaseController {
 
 		Map<String, String> messages = new HashMap<>();
 		try {
+			String checkResult = checkExistsOrUnique(instructorWithDetailsDto.getEncId(), "instructor", "email",
+					instructorWithDetailsDto.getEmail());
+			if(!StringUtils.isEmpty(checkResult))
+				bindingResult.rejectValue("email", "", checkResult);
+
 			if(bindingResult.hasErrors()) {
 				return alfred.buildViewName(instructorFolderName, "instructorForm");
 			}
 			instructorService.save(instructorWithDetailsDto);
-			messages.put("success", "Instructor added successfully");
+			messages.put("success", "Instructor saved successfully");
 		} catch (Exception exception) {
 			messages.put("error", "Could not save instructor");
 		}

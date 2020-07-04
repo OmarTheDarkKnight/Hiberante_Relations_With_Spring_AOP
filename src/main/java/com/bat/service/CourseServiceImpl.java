@@ -4,6 +4,7 @@ import com.bat.dto.CourseDto;
 import com.bat.dto.InstructorWithDetailsDto;
 import com.bat.model.Course;
 import com.bat.model.Instructor;
+import com.bat.model.Name;
 import com.bat.service.interfaces.CourseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,10 @@ public class CourseServiceImpl extends BaseService implements CourseService {
                 //insert
                 InstructorWithDetailsDto instructorDto = instructorDao.getByEmail(courseDto.getEmail());
                 Instructor instructor =
-                        new Instructor(instructorDto.getFirst_name(), instructorDto.getLast_name(), instructorDto.getEmail());
+                        new Instructor(
+                                new Name(instructorDto.getFirst_name(), instructorDto.getLast_name()),
+                                instructorDto.getEmail()
+                        );
                 instructor.setId(instructorDto.getId());
 
                 Course newCourse = new Course(courseDto.getTitle());
