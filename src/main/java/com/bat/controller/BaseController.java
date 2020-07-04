@@ -43,6 +43,7 @@ public abstract class BaseController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmer);
     }
 
+    //TODO: email checking is faulty, needs to be refactored
     protected String checkExistsOrUnique(String id, String table, String column, String value) {
         if(StringUtils.isEmpty(id)) {
             return annotationService.unique(table, column, value) ?
