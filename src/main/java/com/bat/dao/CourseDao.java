@@ -43,6 +43,13 @@ public class CourseDao extends HelperDao {
                 .list();
     }
 
+    public List<CourseDto> getCoursesByStudent(int studentId) {
+        return hibernateQuery("SELECT c.id as id, c.title as title FROM course c JOIN student_course sc ON sc.course_id = c.id " +
+                "WHERE sc.student_id=:studentId", CourseDto.class)
+                .setParameter("studentId", studentId)
+                .list();
+    }
+
     public void delete(int courseId) {
         em.remove(this.getById(courseId));
     }
