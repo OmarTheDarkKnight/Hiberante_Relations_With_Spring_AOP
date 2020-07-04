@@ -34,8 +34,7 @@ public class StudentController extends BaseController {
 	public String showInstructorForm(@RequestParam(value = "target", required = false) String theId,
 									 Model model, RedirectAttributes redirectAttr) {
 		try{
-			// TODO : create service method to fetch student for a specific id and call it from controller
-			StudentWithCourseDto student = null;
+			StudentWithCourseDto student = studentService.getStudentById(theId);
 			model.addAttribute("student", student);
 		} catch (Exception exception) {
 			Map<String, String> messages = new HashMap<>();
