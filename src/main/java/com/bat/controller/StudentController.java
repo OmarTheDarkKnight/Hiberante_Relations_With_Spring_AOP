@@ -83,8 +83,8 @@ public class StudentController extends BaseController {
 	    return "redirect:/student/all";
     }
 
-    @GetMapping("/courses")
-    public String showStudentCourses(@RequestParam("target") String theId, Model model, RedirectAttributes redirectAttr) {
+    @GetMapping("/courses/{studentId}")
+    public String showStudentCourses(@PathVariable("studentId") String theId, Model model, RedirectAttributes redirectAttr) {
 
 		try{
 			model.addAttribute("student", studentService.getCoursesOfStudent(theId));

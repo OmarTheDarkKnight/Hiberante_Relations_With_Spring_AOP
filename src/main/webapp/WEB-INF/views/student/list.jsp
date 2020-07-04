@@ -44,7 +44,7 @@
         </tr>
         <c:forEach var="student" items="${students}">
             <!-- Create url for showing courses for that student -->
-            <c:url var="courseLink" value="/student/courses?target=${student.encId}" />
+            <c:url var="courseLink" value="/student/courses/${student.encId}" />
             <tr>
                 <td>${student.first_name}</td>
                 <td>${student.last_name}</td>
