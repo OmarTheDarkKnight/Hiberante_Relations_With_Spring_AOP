@@ -1,10 +1,7 @@
 package com.bat.controller;
 
 import com.bat.alfred.Helper;
-import com.bat.service.interfaces.AnnotationService;
-import com.bat.service.interfaces.CourseService;
-import com.bat.service.interfaces.InstructorService;
-import com.bat.service.interfaces.ReviewService;
+import com.bat.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.util.StringUtils;
@@ -23,6 +20,9 @@ public abstract class BaseController {
 
     @Autowired
     protected ReviewService reviewService;
+
+    @Autowired
+    protected StudentService studentService;
 
     @Autowired
     protected AnnotationService annotationService;
