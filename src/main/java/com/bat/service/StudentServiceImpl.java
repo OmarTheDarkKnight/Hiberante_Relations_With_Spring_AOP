@@ -1,6 +1,7 @@
 package com.bat.service;
 
 import com.bat.dto.StudentWithCourseDto;
+import com.bat.model.Name;
 import com.bat.model.Student;
 import com.bat.service.interfaces.StudentService;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,17 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 	@Override
 	public Boolean save(StudentWithCourseDto newStudentWithCourseDto) {
 		try {
+			Student student = new Student(
+					new Name(newStudentWithCourseDto.getFirst_name(), newStudentWithCourseDto.getLast_name()),
+					newStudentWithCourseDto.getEmail()
+			);
 			if(StringUtils.isEmpty(newStudentWithCourseDto.getEncId())) {
 				//insert
+				studentDao.insert(student);
 			} else {
 				//update
+				student.setId(decrypt(newStudentWithCourseDto.getEncId(), studentSalt));
+				studentDao.update(student);
 			}
 		} catch (Exception exception) {
 			System.out.println(exception.getMessage());
