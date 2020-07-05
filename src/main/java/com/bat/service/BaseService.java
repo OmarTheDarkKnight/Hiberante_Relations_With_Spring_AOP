@@ -7,21 +7,24 @@ import com.bat.dao.StudentDao;
 import com.bat.dto.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Arrays;
-import java.util.Base64;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+import javax.crypto.Cipher;
+
+/**
+ * AES256 imports
+ * import java.security.spec.KeySpec;
+ * import java.security.spec.InvalidKeySpecException;
+ * import java.io.UnsupportedEncodingException;
+ * import javax.crypto.SecretKey;
+ * import javax.crypto.SecretKeyFactory;
+ * import javax.crypto.spec.IvParameterSpec;
+ * import javax.crypto.spec.PBEKeySpec;
+ **/
 
 public abstract class BaseService {
     @Autowired
@@ -89,6 +92,7 @@ public abstract class BaseService {
     }
 
     /**
+     * AES256 encryption decryption methods
      * methods and variables for AES 256
      * private static SecretKeySpec secretKey256;
      *     private static IvParameterSpec ivParameterSpec;
