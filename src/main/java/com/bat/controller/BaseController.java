@@ -44,15 +44,13 @@ public abstract class BaseController {
     }
 
     //TODO: email checking is faulty, needs to be refactored
-    protected String checkExistsOrUnique(String id, String table, String column, String value) {
+    protected String checkUnique(String table, String column, String value, String id, String salt) {
+        boolean result = false;
         if(StringUtils.isEmpty(id)) {
-            return annotationService.unique(table, column, value) ?
-                    null :
-                    column.substring(0, 1).toUpperCase() + column.substring(1) + " already exists";
+            result = annotationService.unique(table, column, value);
         } else {
-            return annotationService.exists(table, column, value) ?
-                    null :
-                    column.substring(0, 1).toUpperCase() + column.substring(1) + " not found";
+            result = annotationService.unique(table, column, value, id, salt);
         }
+        return result ? null : column.substring(0, 1).toUpperCase() + column.substring(1) + " already exists";
     }
 }

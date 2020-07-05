@@ -56,8 +56,8 @@ public class InstructorController extends BaseController {
 
 		Map<String, String> messages = new HashMap<>();
 		try {
-			String checkResult = checkExistsOrUnique(instructorWithDetailsDto.getEncId(), "instructor", "email",
-					instructorWithDetailsDto.getEmail());
+			String checkResult = checkUnique("instructor", "email", instructorWithDetailsDto.getEmail(),
+					instructorWithDetailsDto.getEncId(), "instructor");
 			if(!StringUtils.isEmpty(checkResult))
 				bindingResult.rejectValue("email", "", checkResult);
 
