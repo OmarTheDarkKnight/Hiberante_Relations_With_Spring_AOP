@@ -54,9 +54,10 @@ public class StudentController extends BaseController {
 
 		Map<String, String> messages = new HashMap<>();
 		try {
-//			String checkResult = checkExistsOrUnique(studentWithCourseDto.getEncId(), "student", "email", studentWithCourseDto.getEmail());
-//			if(!StringUtils.isEmpty(checkResult))
-//				bindingResult.rejectValue("email", "", checkResult);
+			String checkResult = checkUnique("student", "email", studentWithCourseDto.getEmail(),
+					studentWithCourseDto.getEncId(), "std");
+			if(!StringUtils.isEmpty(checkResult))
+				bindingResult.rejectValue("email", "", checkResult);
 
 			if(bindingResult.hasErrors()) {
 				return alfred.buildViewName(studentFolderName, "studentForm");
