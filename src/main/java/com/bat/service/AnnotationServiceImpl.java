@@ -9,17 +9,22 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class AnnotationServiceImpl implements AnnotationService {
+public class AnnotationServiceImpl extends BaseService implements AnnotationService {
     @Autowired
     AnnotationDao annotationDao;
 
     @Override
     public boolean exists(String table, String column, String value) {
-        return annotationDao.occurrenceOfAValue(table, column, value) == 1;
+        return annotationDao.occurrenceOfAValue(table, column, value, 0) == 1;
     }
 
     @Override
     public boolean unique(String table, String column, String value) {
-        return annotationDao.occurrenceOfAValue(table, column, value) == 0;
+        return annotationDao.occurrenceOfAValue(table, column, value, 0) == 0;
+    }
+
+    @Override
+    public boolean unique(String table, String column, String value, String exceptId, String salt) {
+        return annotationDao.occurrenceOfAValue(table, column, value, decrypt(exceptId, salt)) == 0;
     }
 }
