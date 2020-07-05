@@ -19,11 +19,11 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
             if(StringUtils.isEmpty(reviewDto.getEncId())) {
                 //insert
                 Review newReview = new Review(reviewDto.getComment(), reviewDto.getRating());
-                newReview.setCourse(courseDao.getById(decrypt(reviewDto.getEncCourse_id(), courseSalt)));
+                newReview.setCourse(courseDao.getById(decrypt(reviewDto.getEncCourse_id())));
                 reviewDao.insert(newReview);
             } else {
                 //update
-                Review review = reviewDao.getById(decrypt(reviewDto.getEncId(), reviewWSalt));
+                Review review = reviewDao.getById(decrypt(reviewDto.getEncId()));
                 review.setComment(reviewDto.getComment());
                 review.setRating(reviewDto.getRating());
                 reviewDao.update(review);
@@ -37,13 +37,13 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
 
     @Override
     public CourseDto getReviewsOfACourse(String courseId) {
-        CourseDto courseDto = courseDao.getCourseByIdWithInstructor(decrypt(courseId, courseSalt));
-        courseDto.setEncId(encrypt(courseDto.getId(), courseSalt));
+        CourseDto courseDto = courseDao.getCourseByIdWithInstructor(decrypt(courseId));
+        courseDto.setEncId(encrypt(courseDto.getId()));
         courseDto.setRating(reviewDao.getAvgRatingByCourse(courseDto.getId()));
 
         List<ReviewDto> reviewDtoList = reviewDao.getByCourse(courseDto.getId());
         reviewDtoList.forEach(review-> {
-            review.setEncId(encrypt(review.getId(), reviewWSalt));
+            review.setEncId(encrypt(review.getId()));
         });
         courseDto.setReviewDtoList(reviewDtoList);
         return courseDto;
@@ -53,9 +53,9 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
     public ReviewDto getReview(String theEncReviewId, String theParentId) {
         ReviewDto reviewDto = new ReviewDto();
         if(!StringUtils.isEmpty(theEncReviewId)) {
-            Review review = reviewDao.getById(decrypt(theEncReviewId, reviewWSalt));
-            reviewDto.setEncId(encrypt(review.getId(), reviewWSalt));
-            reviewDto.setEncCourse_id(encrypt(review.getCourse().getId(), courseSalt));
+            Review review = reviewDao.getById(decrypt(theEncReviewId));
+            reviewDto.setEncId(encrypt(review.getId()));
+            reviewDto.setEncCourse_id(encrypt(review.getCourse().getId()));
             reviewDto.setComment(review.getComment());
             reviewDto.setRating((float)review.getRating());
         } else {
@@ -66,6 +66,6 @@ public class ReviewServiceImpl extends BaseService implements ReviewService {
 
     @Override
     public void delete(String theId) {
-        reviewDao.delete(decrypt(theId, reviewWSalt));
+        reviewDao.delete(decrypt(theId));
     }
 }

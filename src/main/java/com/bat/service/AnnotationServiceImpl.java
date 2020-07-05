@@ -24,7 +24,7 @@ public class AnnotationServiceImpl extends BaseService implements AnnotationServ
     }
 
     @Override
-    public boolean unique(String table, String column, String value, String exceptId, String salt) {
-        return annotationDao.occurrenceOfAValue(table, column, value, decrypt(exceptId, salt)) == 0;
+    public boolean unique(String table, String column, String value, String exceptId) {
+        return annotationDao.occurrenceOfAValue(table, column, value, decrypt(exceptId)) == 0;
     }
 }

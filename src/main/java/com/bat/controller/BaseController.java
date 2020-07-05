@@ -43,12 +43,12 @@ public abstract class BaseController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmer);
     }
 
-    protected String checkUnique(String table, String column, String value, String id, String salt) {
+    protected String checkUnique(String table, String column, String value, String id) {
         boolean result = false;
         if(StringUtils.isEmpty(id)) {
             result = annotationService.unique(table, column, value);
         } else {
-            result = annotationService.unique(table, column, value, id, salt);
+            result = annotationService.unique(table, column, value, id);
         }
         return result ? null : column.substring(0, 1).toUpperCase() + column.substring(1) + " already exists";
     }

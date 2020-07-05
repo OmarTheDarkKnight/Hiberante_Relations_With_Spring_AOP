@@ -27,7 +27,7 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 				studentDao.insert(student);
 			} else {
 				//update
-				student.setId(decrypt(newStudentWithCourseDto.getEncId(), studentSalt));
+				student.setId(decrypt(newStudentWithCourseDto.getEncId()));
 				studentDao.update(student);
 			}
 		} catch (Exception exception) {
@@ -41,7 +41,7 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 	public List<StudentWithCourseDto> getAllStudents() {
 		List<StudentWithCourseDto> students = studentDao.getAll();
 		students.forEach(student -> {
-			student.setEncId(encrypt(student.getId(), studentSalt));
+			student.setEncId(encrypt(student.getId()));
 		});
 		return students;
 	}
@@ -50,8 +50,8 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 	public StudentWithCourseDto getStudentById(String studentId) {
 		StudentWithCourseDto studentWithCourseDto = new StudentWithCourseDto();
 		if(!StringUtils.isEmpty(studentId)) {
-			Student student = studentDao.getById(decrypt(studentId, studentSalt));
-			studentWithCourseDto.setEncId(encrypt(student.getId(), studentSalt));
+			Student student = studentDao.getById(decrypt(studentId));
+			studentWithCourseDto.setEncId(encrypt(student.getId()));
 			studentWithCourseDto.setFirst_name(student.getName().getFirstName());
 			studentWithCourseDto.setLast_name(student.getName().getLastName());
 			studentWithCourseDto.setEmail(student.getEmail());
@@ -61,18 +61,18 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 
 	@Override
 	public StudentWithCourseDto getCoursesOfStudent(String studentId) {
-		Student student = studentDao.getById(decrypt(studentId, studentSalt));
+		Student student = studentDao.getById(decrypt(studentId));
 
 		// convert from model to dto
 		StudentWithCourseDto studentWithCourseDto = new StudentWithCourseDto(student.getName().getFirstName(), student.getName().getLastName(),
 				student.getEmail());
-		studentWithCourseDto.setEncId(encrypt(student.getId(), studentSalt));
+		studentWithCourseDto.setEncId(encrypt(student.getId()));
 
 		// fetch course list and set them in studentWithCourseDto
 		List<CourseDto> courses = courseDao.getCoursesByStudent(student.getId());
 		courses.forEach(course -> {
 			course.setRating(reviewDao.getAvgRatingByCourse(course.getId()));
-			course.setEncId(encrypt(course.getId(), courseSalt));
+			course.setEncId(encrypt(course.getId()));
 		});
 		studentWithCourseDto.setCourses(courses);
 
@@ -81,6 +81,6 @@ public class StudentServiceImpl extends BaseService implements StudentService {
 
 	@Override
 	public void delete(String theID) {
-		studentDao.delete(decrypt(theID, studentSalt));
+		studentDao.delete(decrypt(theID));
 	}
 }

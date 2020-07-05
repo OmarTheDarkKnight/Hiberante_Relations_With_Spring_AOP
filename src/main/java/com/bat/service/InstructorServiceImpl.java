@@ -34,7 +34,7 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 		if(StringUtils.isEmpty(newInstructorWithDetails.getEncId())) {
 			instructorDao.insert(newInstructor);
 		} else {
-			newInstructor.setId(decrypt(newInstructorWithDetails.getEncId(), instructorSalt));
+			newInstructor.setId(decrypt(newInstructorWithDetails.getEncId()));
 			instructorDetails.setId(newInstructorWithDetails.getInstructor_detail_id());
 			instructorDao.update(newInstructor);
 		}
@@ -44,7 +44,7 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 	public List<InstructorWithDetailsDto> getAllInstructorsWithDetails() {
 		List<InstructorWithDetailsDto> instructorWithDetailsDtos = instructorDao.getAllWithDetails();
 		instructorWithDetailsDtos.forEach(dto->{
-			dto.setEncId(encrypt(dto.getId(), instructorSalt));
+			dto.setEncId(encrypt(dto.getId()));
 		});
 		return instructorWithDetailsDtos;
 	}
@@ -53,13 +53,10 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 	public InstructorWithDetailsDto getInstructorFormData(String theInstructorId) {
 		InstructorWithDetailsDto instructorWithDetailsDto = new InstructorWithDetailsDto();
 		if(!StringUtils.isEmpty(theInstructorId)) {
-			Instructor instructor = instructorDao.getById(decrypt(theInstructorId, instructorSalt));
+			Instructor instructor = instructorDao.getById(decrypt(theInstructorId));
 
 			// converting from entity to dto object
-			instructorWithDetailsDto.setEncId(
-					encrypt(instructor.getId(), // get the instructor id, convert to string and set it as first parameter for encrypt method
-					instructorSalt) // second parameter of the encrypt method
-			);
+			instructorWithDetailsDto.setEncId(encrypt(instructor.getId()));
 			instructorWithDetailsDto.setFirst_name(instructor.getName().getFirstName());
 			instructorWithDetailsDto.setLast_name(instructor.getName().getLastName());
 			instructorWithDetailsDto.setEmail(instructor.getEmail());
@@ -76,7 +73,7 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 	public InstructorWithCourseDto getInstructorCourses(String theInstructorId) throws Exception {
 		InstructorWithCourseDto instructorWithCourseDto = new InstructorWithCourseDto();
 		if(!StringUtils.isEmpty(theInstructorId.trim())) {
-			Instructor instructor = instructorDao.getById(decrypt(theInstructorId, instructorSalt));
+			Instructor instructor = instructorDao.getById(decrypt(theInstructorId));
 			instructorWithCourseDto.setEncId(theInstructorId);
 			instructorWithCourseDto.setFirst_name(instructor.getName().getFirstName());
 			instructorWithCourseDto.setLast_name(instructor.getName().getLastName());
@@ -84,7 +81,7 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 
 			List<CourseDto> courseDtoList = courseDao.getByInstructor(instructor.getId());
 			courseDtoList.forEach(courseDto -> {
-				courseDto.setEncId(encrypt(courseDto.getId(), courseSalt));
+				courseDto.setEncId(encrypt(courseDto.getId()));
 				courseDto.setRating(reviewDao.getAvgRatingByCourse(courseDto.getId()));
 			});
 			instructorWithCourseDto.setCourses(courseDtoList);
@@ -96,6 +93,6 @@ public class InstructorServiceImpl extends BaseService implements InstructorServ
 
 	@Override
 	public void delete(String theID) {
-		instructorDao.delete(decrypt(theID, instructorSalt));
+		instructorDao.delete(decrypt(theID));
 	}
 }

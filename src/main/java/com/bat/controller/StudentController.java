@@ -55,7 +55,7 @@ public class StudentController extends BaseController {
 		Map<String, String> messages = new HashMap<>();
 		try {
 			String checkResult = checkUnique("student", "email", studentWithCourseDto.getEmail(),
-					studentWithCourseDto.getEncId(), "std");
+					studentWithCourseDto.getEncId());
 			if(!StringUtils.isEmpty(checkResult))
 				bindingResult.rejectValue("email", "", checkResult);
 
