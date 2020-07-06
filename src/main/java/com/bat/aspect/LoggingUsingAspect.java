@@ -46,4 +46,34 @@ public class LoggingUsingAspect {
         }
 
     }
+
+
+    // add @AfterReturning advice
+    @AfterReturning(
+            pointcut="forAppFlow()",
+            returning="theResult"
+    )
+    public void afterReturning(JoinPoint theJoinPoint, Object theResult) {
+        // display method we are returning from
+        String theMethod = theJoinPoint.getSignature().toShortString();
+        myLogger.info("=====>> in @AfterReturning: from method: " + theMethod);
+
+        // display data returned
+        myLogger.info("=====>> result: " + theResult);
+
+    }
+
+    @AfterThrowing(
+            pointcut = "forAppFlow()",
+            throwing = "theException"
+    )
+    public void afterThrowing(JoinPoint theJoinPoint, Throwable theException) {
+        // display method we are returning from
+        String theMethod = theJoinPoint.getSignature().toShortString();
+        myLogger.info("======>> in @AfterThrowing: from method: " + theMethod);
+
+        // display data returned
+        myLogger.severe("======>> error: " + theException.getMessage());
+        myLogger.severe("======>> cause: " + theException.getCause().toString());
+    }
 }
