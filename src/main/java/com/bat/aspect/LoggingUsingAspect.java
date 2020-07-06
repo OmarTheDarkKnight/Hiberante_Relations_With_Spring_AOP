@@ -2,6 +2,7 @@ package com.bat.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.CodeSignature;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
@@ -35,14 +36,14 @@ public class LoggingUsingAspect {
         String theMethod = theJoinPoint.getSignature().toShortString();
         myLogger.info("=====>> in @Before: calling method: " + theMethod);
 
-        // display the arguments to the method
+        // get the arguments and the parameter names
+        Object[] argValues = theJoinPoint.getArgs();
+        String[] argNames = ((CodeSignature) theJoinPoint.getSignature()).getParameterNames();
 
-        // get the arguments
-        Object[] args = theJoinPoint.getArgs();
-
-        // loop thru and display args
-        for (Object tempArg : args) {
-            myLogger.info("=====>> argument: " + tempArg);
+        // loop thru and display argValues and argNames
+        myLogger.info("<<============ ARGUMENTS ===========>>");
+        for (int i = 0; i < argNames.length; i++) {
+            myLogger.info((i+1)+". " + argNames[i] + " ===> " + argValues[i]);
         }
 
     }
